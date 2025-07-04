@@ -4,35 +4,35 @@
     <div class="page-header">
       <div class="header-content">
         <div class="title-container">
-          <i class="el-icon-data-analysis"></i>
+          <i class="el-icon-data-analysis" />
           <h1>运动知识库</h1>
         </div>
         <p class="subtitle">探索各类运动知识，培养健康生活方式</p>
       </div>
       <div class="search-container">
         <el-input
-          placeholder="搜索运动项目..."
           v-model="searchText"
+          placeholder="搜索运动项目..."
           class="search-input"
           prefix-icon="el-icon-search"
+          clearable
           @keyup.enter.native="handleSearch"
           @input="generateSearchSuggestions"
           @focus="generateSearchSuggestions"
           @blur="hideSuggestions"
-          clearable
         >
-          <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
+          <el-button slot="append" icon="el-icon-search" @click="handleSearch" />
 
           <!-- 搜索建议框 -->
           <div v-if="showSuggestions" class="search-suggestions">
             <div
-              class="suggestion-item"
               v-for="(suggestion, index) in searchSuggestions"
               :key="index"
-              @click="selectSuggestion(suggestion)"
+              class="suggestion-item"
               :class="{ 'active': searchText === suggestion }"
+              @click="selectSuggestion(suggestion)"
             >
-              <i class="el-icon-search"></i>
+              <i class="el-icon-search" />
               <span>{{ suggestion }}</span>
             </div>
           </div>
@@ -44,29 +44,29 @@
     <!-- 运动卡片展示区域 -->
     <div class="sport-cards-container">
       <el-row :gutter="24">
-        <el-col :xs="24" :sm="12" :md="8" v-for="(sportInfo, index) in sportInfos" :key="index">
+        <el-col v-for="(sportInfo, index) in sportInfos" :key="index" :xs="24" :sm="12" :md="8">
           <div class="sport-card" :class="`sport-card-${index % 5}`">
             <div class="card-header">
               <h2>{{ sportInfo.sportType }}</h2>
               <div class="sport-icon">
-                <i :class="getSportIcon(sportInfo.sportType)"></i>
+                <i :class="getSportIcon(sportInfo.sportType)" />
               </div>
             </div>
             <div class="card-content">
               <div class="info-item">
-                <div class="info-label"><i class="el-icon-time"></i> 适宜时间</div>
+                <div class="info-label"><i class="el-icon-time" /> 适宜时间</div>
                 <div class="info-value">{{ sportInfo.suitableTime }}</div>
               </div>
               <div class="info-item">
-                <div class="info-label"><i class="el-icon-bangzhu"></i> 适宜心率</div>
+                <div class="info-label"><i class="el-icon-bangzhu" /> 适宜心率</div>
                 <div class="info-value">{{ sportInfo.suitableHeartRate }}</div>
               </div>
               <div class="info-item">
-                <div class="info-label"><i class="el-icon-date"></i> 适宜频率</div>
+                <div class="info-label"><i class="el-icon-date" /> 适宜频率</div>
                 <div class="info-value">{{ sportInfo.suitableFrequency }}</div>
               </div>
               <div class="info-item">
-                <div class="info-label"><i class="el-icon-odometer"></i> 推荐速度</div>
+                <div class="info-label"><i class="el-icon-odometer" /> 推荐速度</div>
                 <div class="info-value">{{ sportInfo.recommendedSpeed || '无' }}</div>
               </div>
             </div>
@@ -76,7 +76,7 @@
                 class="detail-button"
                 @click="goToDetail(sportInfo.sportType, sportInfo)"
               >
-                <i class="el-icon-view"></i> 查看详情
+                <i class="el-icon-view" /> 查看详情
               </el-button>
             </div>
           </div>
@@ -85,8 +85,8 @@
     </div>
 
     <!-- 无数据提示 -->
-    <div class="empty-state" v-if="sportInfos.length === 0">
-      <i class="el-icon-warning-outline"></i>
+    <div v-if="sportInfos.length === 0" class="empty-state">
+      <i class="el-icon-warning-outline" />
       <p>暂无相关运动知识，请尝试其他搜索关键词</p>
       <el-button type="primary" @click="showSearch">重新加载</el-button>
     </div>
@@ -100,24 +100,24 @@
       custom-class="search-dialog"
     >
       <el-input
-        placeholder="请输入运动名称关键词"
         v-model="searchText"
+        placeholder="请输入运动名称关键词"
         prefix-icon="el-icon-search"
+        clearable
         @input="generateSearchSuggestions"
         @focus="generateSearchSuggestions"
         @blur="hideSuggestions"
-        clearable
-      ></el-input>
+      />
       <!-- 建议框在对话框中也需要显示 -->
       <div v-if="showSuggestions" class="search-suggestions-dialog">
         <div
-          class="suggestion-item"
           v-for="(suggestion, index) in searchSuggestions"
           :key="index"
-          @click="selectSuggestion(suggestion)"
+          class="suggestion-item"
           :class="{ 'active': searchText === suggestion }"
+          @click="selectSuggestion(suggestion)"
         >
-          <i class="el-icon-search"></i>
+          <i class="el-icon-search" />
           <span>{{ suggestion }}</span>
         </div>
       </div>
@@ -131,37 +131,37 @@
 </template>
 
 <script>
-import sportApi from "@/api/Function_Menu";
+import sportApi from '@/api/Function_Menu'
 
 export default {
   data() {
     return {
       showDialog: false,
-      searchText: "",
+      searchText: '',
       sportInfos: [],
       DetailInfo: [],
       allSportTypes: [], // 存储所有运动类型
       searchSuggestions: [], // 存储搜索建议
       showSuggestions: false, // 控制建议框显示
       activeSuggestionIndex: 0 // 建议项选中索引
-    };
+    }
   },
 
   async created() {
-    await this.showSearch();
+    await this.showSearch()
     // 加载所有运动类型用于搜索建议
-    await this.loadAllSportTypes();
+    await this.loadAllSportTypes()
   },
 
   methods: {
     // 加载所有运动类型
     async loadAllSportTypes() {
       try {
-        const response = await sportApi.getAllSportInfo();
+        const response = await sportApi.getAllSportInfo()
         // 提取所有运动类型
-        this.allSportTypes = response.data.sportInfos.map(item => item.sportType);
+        this.allSportTypes = response.data.sportInfos.map(item => item.sportType)
       } catch (error) {
-        console.error("加载运动类型失败", error);
+        console.error('加载运动类型失败', error)
       }
       // 提供默认数据用于测试
       // this.allSportTypes = ["越野跑", "瑜伽", "羽毛球", "慢跑", "跑步", "太极拳", "游泳", "篮球", "足球"];
@@ -170,55 +170,55 @@ export default {
     // 生成搜索建议
     generateSearchSuggestions() {
       if (!this.searchText.trim()) {
-        this.searchSuggestions = [];
-        this.showSuggestions = false;
-        return;
+        this.searchSuggestions = []
+        this.showSuggestions = false
+        return
       }
 
-      const searchTerm = this.searchText.toLowerCase();
+      const searchTerm = this.searchText.toLowerCase()
       // 筛选包含搜索词的运动类型（不区分大小写）
       this.searchSuggestions = this.allSportTypes
         .filter(sport => sport.toLowerCase().includes(searchTerm))
-        .slice(0, 5); // 最多显示5条建议
+        .slice(0, 5) // 最多显示5条建议
 
-      this.showSuggestions = this.searchSuggestions.length > 0;
+      this.showSuggestions = this.searchSuggestions.length > 0
     },
 
     // 选择搜索建议
     selectSuggestion(suggestion) {
-      this.searchText = suggestion;
-      this.showSuggestions = false;
-      this.handleSearch();// 自动搜索建议内容
+      this.searchText = suggestion
+      this.showSuggestions = false
+      this.handleSearch()// 自动搜索建议内容
     },
 
     // 隐藏建议框
     hideSuggestions() {
       // 失去焦点后延迟隐藏，避免点击建议项时触发
       setTimeout(() => {
-        this.showSuggestions = false;
-      }, 200);
+        this.showSuggestions = false
+      }, 200)
     },
 
     // 处理搜索（统一搜索逻辑）
     async handleSearch() {
       try {
         // 去除搜索文本两端的空格
-        const searchTerm = this.searchText.trim();
+        const searchTerm = this.searchText.trim()
 
         // 如果搜索文本为空，加载所有运动信息
         if (!searchTerm) {
-          await this.showSearch();
-          this.showDialog = false;
-          return;
+          await this.showSearch()
+          this.showDialog = false
+          return
         }
 
-        const response = await sportApi.getAllSportInfo();
-        const sportInfoData = response.data.sportInfos;
+        const response = await sportApi.getAllSportInfo()
+        const sportInfoData = response.data.sportInfos
 
         // 优化搜索逻辑：支持模糊搜索，不区分大小写
         const filteredSportInfoData = sportInfoData.filter((info) => {
-          return info.sportType.toLowerCase().includes(searchTerm.toLowerCase());
-        });
+          return info.sportType.toLowerCase().includes(searchTerm.toLowerCase())
+        })
 
         // 重构每条运动信息的数据格式
         const sportInfos = filteredSportInfoData.map((info) => ({
@@ -227,34 +227,34 @@ export default {
           suitableTime: info.suitableTime,
           suitableHeartRate: info.suitableHeartRate,
           suitableFrequency: info.suitableFrequency,
-          recommendedSpeed: info.recommendedSpeed,
-        }));
+          recommendedSpeed: info.recommendedSpeed
+        }))
 
         // 更新运动信息列表
-        this.sportInfos = sportInfos;
+        this.sportInfos = sportInfos
         // 隐藏搜索框
-        this.showDialog = false;
-        this.showSuggestions = false; // 搜索后隐藏建议框
+        this.showDialog = false
+        this.showSuggestions = false // 搜索后隐藏建议框
 
         if (sportInfos.length > 0) {
           this.$message({
             message: `找到 ${sportInfos.length} 条相关运动知识`,
-            type: "success",
+            type: 'success',
             duration: 1500
-          });
+          })
         } else {
           this.$message({
-            message: "未找到相关运动知识，尝试使用其他关键词搜索",
-            type: "warning",
+            message: '未找到相关运动知识，尝试使用其他关键词搜索',
+            type: 'warning',
             duration: 1500
-          });
+          })
         }
       } catch (error) {
-        console.log(error);
+        console.log(error)
         this.$message({
-          message: "搜索失败，请稍后再试",
-          type: "error"
-        });
+          message: '搜索失败，请稍后再试',
+          type: 'error'
+        })
       }
     },
 
@@ -270,32 +270,32 @@ export default {
         '游泳': 'el-icon-ship',
         '篮球': 'el-icon-basketball',
         '足球': 'el-icon-football'
-      };
+      }
 
-      return iconMap[sportType] || 'el-icon-data-analysis';
+      return iconMap[sportType] || 'el-icon-data-analysis'
     },
 
     goToDetail(sportName, sportInfo) {
       sportApi
         .DetailInfo(sportName)
         .then((response) => {
-          const detailInfo = response.data;
+          const detailInfo = response.data
           // 将this.DetailInfo与sportInfo合并
-          const mergedInfo = { ...detailInfo, ...sportInfo };
+          const mergedInfo = { ...detailInfo, ...sportInfo }
           // 传递参数并跳转
-          this.$router.push({ path: "/detail", query: mergedInfo });
+          this.$router.push({ path: '/detail', query: mergedInfo })
         })
         .catch((error) => {
-          console.error(error);
+          console.error(error)
           this.$message({
-            message: "获取详情失败，请稍后再试",
-            type: "error"
-          });
-        });
+            message: '获取详情失败，请稍后再试',
+            type: 'error'
+          })
+        })
     },
 
     closeDialog() {
-      this.showDialog = false;
+      this.showDialog = false
     },
 
     // showSearchBox() {
@@ -304,17 +304,17 @@ export default {
     // },
     // 显示搜索框（修改原有方法）
     showSearchBox() {
-      this.searchText = ""; // 重置搜索框
-      this.showDialog = true;
-      this.showSuggestions = false; // 隐藏建议框
+      this.searchText = '' // 重置搜索框
+      this.showDialog = true
+      this.showSuggestions = false // 隐藏建议框
     },
 
     async showSearch() {
       try {
-        const response = await sportApi.getAllSportInfo();
+        const response = await sportApi.getAllSportInfo()
         // 取得运动信息数组
-        const sportInfoData = response.data.sportInfos;
-        const sportInfos = sportInfoData.slice();
+        const sportInfoData = response.data.sportInfos
+        const sportInfos = sportInfoData.slice()
         // 重构每条运动信息的数据格式
         this.sportInfos = sportInfos.map((info) => ({
           id: info.id,
@@ -322,23 +322,23 @@ export default {
           suitableTime: info.suitableTime,
           suitableHeartRate: info.suitableHeartRate,
           suitableFrequency: info.suitableFrequency,
-          recommendedSpeed: info.recommendedSpeed,
-        }));
+          recommendedSpeed: info.recommendedSpeed
+        }))
         this.$message({
-          message: "加载成功",
-          type: "success",
+          message: '加载成功',
+          type: 'success',
           duration: 1500
-        });
+        })
       } catch (error) {
-        console.log(error);
+        console.log(error)
         this.$message({
-          message: "加载失败，请稍后再试",
-          type: "error"
-        });
+          message: '加载失败，请稍后再试',
+          type: 'error'
+        })
       }
     }
-  },
-};
+  }
+}
 </script>
 
 <style scoped>

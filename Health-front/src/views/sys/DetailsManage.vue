@@ -5,23 +5,23 @@
     <div class="search-container">
       <div class="search-header">
         <div class="search-title">
-          <i class="el-icon-document"></i>
+          <i class="el-icon-document" />
           <span>运动详情查询</span>
         </div>
       </div>
       <div class="search-content">
-            <el-input
-              v-model="searchModel.sportType"
+        <el-input
+          v-model="searchModel.sportType"
           placeholder="请输入运动类型"
           prefix-icon="el-icon-bicycle"
-              clearable
+          clearable
           class="search-input"
-            ></el-input>
-            <el-button
-              @click="getDetailList"
-              type="primary"
-              icon="el-icon-search"
+        />
+        <el-button
+          type="primary"
+          icon="el-icon-search"
           class="search-btn"
+          @click="getDetailList"
         >查询</el-button>
       </div>
     </div>
@@ -30,15 +30,15 @@
     <div class="table-container">
       <div class="table-header">
         <div class="table-title">
-          <i class="el-icon-notebook-1"></i>
+          <i class="el-icon-notebook-1" />
           <span>运动详情列表</span>
           <span class="table-count">共 {{ total }} 条记录</span>
         </div>
-            <el-button
-              @click="openEditUi(null)"
-              type="primary"
-              icon="el-icon-plus"
+        <el-button
+          type="primary"
+          icon="el-icon-plus"
           class="add-btn"
+          @click="openEditUi(null)"
         >新增详情</el-button>
       </div>
       <el-table
@@ -54,117 +54,116 @@
           label="ID"
           width="70"
           align="center"
-          ></el-table-column>
-          <el-table-column
-            prop="sportType"
-            label="运动类型"
+        />
+        <el-table-column
+          prop="sportType"
+          label="运动类型"
           min-width="120"
           align="center"
         >
           <template slot-scope="scope">
             <div class="sport-type-cell">
-              <i class="el-icon-trophy"></i>
+              <i class="el-icon-trophy" />
               <span>{{ scope.row.sportType }}</span>
             </div>
           </template>
         </el-table-column>
-          <el-table-column
-            prop="disease"
-            label="禁忌疾病"
+        <el-table-column
+          prop="disease"
+          label="禁忌疾病"
           min-width="120"
           align="center"
         >
           <template slot-scope="scope">
             <div class="disease-cell">
-              <i class="el-icon-warning"></i>
+              <i class="el-icon-warning" />
               <span>{{ scope.row.disease }}</span>
             </div>
           </template>
         </el-table-column>
-          <el-table-column
-            prop="method"
-            label="运动方法"
+        <el-table-column
+          prop="method"
+          label="运动方法"
           min-width="180"
           align="center"
         >
           <template slot-scope="scope">
             <div class="method-cell">
-              <i class="el-icon-guide"></i>
+              <i class="el-icon-guide" />
               <span>{{ scope.row.method }}</span>
             </div>
           </template>
         </el-table-column>
-          <el-table-column
-            prop="notes"
-            label="注意事项"
+        <el-table-column
+          prop="notes"
+          label="注意事项"
           min-width="180"
           align="center"
         >
           <template slot-scope="scope">
             <div class="notes-cell">
-              <i class="el-icon-info"></i>
+              <i class="el-icon-info" />
               <span>{{ scope.row.notes }}</span>
             </div>
           </template>
         </el-table-column>
         <el-table-column
           label="操作"
-            width="180"
+          width="180"
           align="center"
           fixed="right"
         >
-            <template slot-scope="scope">
+          <template slot-scope="scope">
             <div class="operation-cell">
               <el-button
-                @click="openEditUi(scope.row.id)"
                 type="primary"
                 icon="el-icon-edit"
                 size="small"
                 class="edit-btn"
+                @click="openEditUi(scope.row.id)"
               >编辑</el-button>
               <el-button
-                @click="deleteDetail(scope.row)"
                 type="danger"
                 icon="el-icon-delete"
                 size="small"
                 class="delete-btn"
+                @click="deleteDetail(scope.row)"
               >删除</el-button>
             </div>
-            </template>
-          </el-table-column>
-        </el-table>
+          </template>
+        </el-table-column>
+      </el-table>
 
       <!-- 分页功能 -->
       <div class="pagination-container">
-      <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="searchModel.pageNo"
-        :page-sizes="[5, 10, 20, 30]"
-        :page-size="searchModel.pageSize"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total"
+        <el-pagination
+          :current-page="searchModel.pageNo"
+          :page-sizes="[5, 10, 20, 30]"
+          :page-size="searchModel.pageSize"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total"
           background
-      >
-      </el-pagination>
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
       </div>
     </div>
 
     <!-- 运动详情编辑信息弹出框 -->
-      <el-dialog
-        @close="clearForm"
-        :title="title"
-        :visible.sync="dialogFormVisible"
+    <el-dialog
+      :title="title"
+      :visible.sync="dialogFormVisible"
       width="600px"
       :close-on-click-modal="false"
       center
       class="detail-dialog"
+      @close="clearForm"
     >
       <div class="dialog-content">
-        <el-form :model="detailForm" ref="detailFormRef" label-width="100px">
+        <el-form ref="detailFormRef" :model="detailForm" label-width="100px">
           <el-form-item label="运动类型" prop="sportType">
             <el-input v-model="detailForm.sportType" placeholder="请输入运动类型">
-              <i slot="prefix" class="el-icon-trophy"></i>
+              <i slot="prefix" class="el-icon-trophy" />
             </el-input>
           </el-form-item>
           <el-form-item label="运动图片" prop="imageUrl">
@@ -177,13 +176,13 @@
               accept="image/*"
             >
               <img v-if="detailForm.imageUrl" :src="detailForm.imageUrl" class="sport-image">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
 
           <el-form-item label="禁忌疾病" prop="disease">
             <el-input v-model="detailForm.disease" placeholder="请输入禁忌疾病">
-              <i slot="prefix" class="el-icon-warning"></i>
+              <i slot="prefix" class="el-icon-warning" />
             </el-input>
           </el-form-item>
 
@@ -193,7 +192,7 @@
               type="textarea"
               rows="3"
               placeholder="请输入运动方法"
-            ></el-input>
+            />
           </el-form-item>
 
           <el-form-item label="注意事项" prop="notes">
@@ -202,199 +201,192 @@
               type="textarea"
               rows="3"
               placeholder="请输入注意事项"
-            ></el-input>
+            />
           </el-form-item>
         </el-form>
       </div>
-        <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false" class="cancel-btn">取 消</el-button>
-        <el-button type="primary" @click="saveDetail" class="confirm-btn">确 定</el-button>
-        </div>
-      </el-dialog>
-    </div>
-  </template>
+      <div slot="footer" class="dialog-footer">
+        <el-button class="cancel-btn" @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" class="confirm-btn" @click="saveDetail">确 定</el-button>
+      </div>
+    </el-dialog>
+  </div>
+</template>
 
-  <script>
-  import sportApi from "@/api/Function_Menu";
-  export default {
-    data() {
-
-      return {
-        detailForm: {}, //初始化为一个空对象
-        detailList:[],
-        //左边宽度
-        formLabelWidth: "135px",
-        //设置默认值不可见
-        dialogFormVisible: false,
-        title: "",
-        total: 0,
-        searchModel: {
-          pageNo: 1,
-          // 默认显示数量
-          pageSize: 10,
-        },
-        //表单规则配置
-
-        rules: {
-          sportType: [
-            { required: true, message: "请输入运动类型", trigger: "blur" }
-          ]
-        },
-      };
-    },
-
-    methods: {
-      saveDetail() {
-        let isOk = true;
-        //触发表单的验证
-        this.$refs.detailFormRef.validate((valid) => {
-          // 这边只有校验失败的时候才会进来,在外面定义一个 isok,校验失败会将他改成 false
-          isOk = valid;
-        });
-
-        if (isOk) {
-          //提交验证给后台
-          console.log(this.detailtForm)
-          sportApi.saveDetail(this.detailForm).then((response) => {
-            //成功提示
-            this.$message({
-              message: response.message,
-              type: "success",
-            });
-            //关闭对话框
-            this.dialogFormVisible = false;
-            //刷新表格数据
-            this.getDetailList();
-          });
-        } else {
-          console.log("error submit!!");
-          return false;
-        }
+<script>
+import sportApi from '@/api/Function_Menu'
+export default {
+  data() {
+    return {
+      detailForm: {}, // 初始化为一个空对象
+      detailList: [],
+      // 左边宽度
+      formLabelWidth: '135px',
+      // 设置默认值不可见
+      dialogFormVisible: false,
+      title: '',
+      total: 0,
+      searchModel: {
+        pageNo: 1,
+        // 默认显示数量
+        pageSize: 10
       },
+      // 表单规则配置
 
-      //清理表单数据
-      clearForm() {
-        this.detailForm = {
-        };
-        //清除表单校验的提示信息
-        this.$refs.detailFormRef.clearValidate();
-      },
-      handleSizeChange(pageSize) {
-        //数据更新
-        this.searchModel.pageSize = pageSize;
-        this.getDetailList();
-      },
-      handleCurrentChange(pageNo) {
-        this.searchModel.pageNo = pageNo;
-        this.getDetailList();
-      },
+      rules: {
+        sportType: [
+          { required: true, message: '请输入运动类型', trigger: 'blur' }
+        ]
+      }
+    }
+  },
 
-      // 图片上传处理
-      handleImageChange(file) {
-        const isImage = file.raw.type.startsWith('image/');
-        const isLt2M = file.size / 1024 / 1024 < 2;
+  // 加载时就查询一次
+  created() {
+    this.getDetailList()
+  },
 
-        if (!isImage) {
-          this.$message.error('只能上传图片文件');
-          return false;
-        }
+  methods: {
+    saveDetail() {
+      let isOk = true
+      // 触发表单的验证
+      this.$refs.detailFormRef.validate((valid) => {
+        // 这边只有校验失败的时候才会进来,在外面定义一个 isok,校验失败会将他改成 false
+        isOk = valid
+      })
 
-        if (!isLt2M) {
-          this.$message.error('图片大小不能超过2MB');
-          return false;
-        }
-
-        // 创建FormData对象
-        const formData = new FormData();
-        formData.append('file', file.raw);
-
-        // 显示上传进度
-        this.uploadLoading = true;
-
-        // 使用正确的axios实例
-        return this.$axios.post('/upload/image', formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }).then(response => {
-          const imageUrl = response.data.data || response.data.message;
-          if (!imageUrl) {
-            throw new Error('未获取到图片URL');
-          }
-
-          // 确保URL格式正确
-          let fullUrl = imageUrl;
-          if (!imageUrl.startsWith('http')) {
-            fullUrl = `${process.env.VUE_APP_BASE_API}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
-          }
-
-          this.detailForm.imageUrl = fullUrl;
-          return fullUrl;
-        }).catch(error => {
-          this.$message.error('图片上传失败: ' + error.message);
-          throw error;
-        });
-      },
-
-
-
-      //用于查询用户列表
-      getDetailList() {
-        sportApi.getDetailList(this.searchModel).then((response) => {
-          this.detailList = response.data.rows;
-          this.total = response.data.total;
-        });
-      },
-
-
-
-      openEditUi(id) {
-        console.log(id)
-        if (id == null) {
-          this.title = "新增运动详情";
-        } else {
-          this.title = "修改运动详情";
-          //根据id查询用户数据
-          sportApi.getDetailById(id).then((response) => {
-            this.detailForm = response.data;
-            console.log(this.detailForm)
-          });
-        }
-        this.dialogFormVisible = true;
-      },
-
-
-      deleteDetail(detail) {
-        this.$confirm(`确认删除 ${detail.sportType} 这个运动详情吗？`, "提示", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning",
-        })
-          .then(() => {
-            sportApi.deleteDetailById(detail.id).then((response) => {
-              this.$message({
-                type: "success",
-                message: response.message,
-              });
-              this.getDetailList();
-            });
+      if (isOk) {
+        // 提交验证给后台
+        console.log(this.detailtForm)
+        sportApi.saveDetail(this.detailForm).then((response) => {
+          // 成功提示
+          this.$message({
+            message: response.message,
+            type: 'success'
           })
-          .catch(() => {
+          // 关闭对话框
+          this.dialogFormVisible = false
+          // 刷新表格数据
+          this.getDetailList()
+        })
+      } else {
+        console.log('error submit!!')
+        return false
+      }
+    },
+
+    // 清理表单数据
+    clearForm() {
+      this.detailForm = {
+      }
+      // 清除表单校验的提示信息
+      this.$refs.detailFormRef.clearValidate()
+    },
+    handleSizeChange(pageSize) {
+      // 数据更新
+      this.searchModel.pageSize = pageSize
+      this.getDetailList()
+    },
+    handleCurrentChange(pageNo) {
+      this.searchModel.pageNo = pageNo
+      this.getDetailList()
+    },
+
+    // 图片上传处理
+    handleImageChange(file) {
+      const isImage = file.raw.type.startsWith('image/')
+      const isLt2M = file.size / 1024 / 1024 < 2
+
+      if (!isImage) {
+        this.$message.error('只能上传图片文件')
+        return false
+      }
+
+      if (!isLt2M) {
+        this.$message.error('图片大小不能超过2MB')
+        return false
+      }
+
+      // 创建FormData对象
+      const formData = new FormData()
+      formData.append('file', file.raw)
+
+      // 显示上传进度
+      this.uploadLoading = true
+
+      // 使用正确的axios实例
+      return this.$axios.post('/upload/image', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(response => {
+        const imageUrl = response.data.data || response.data.message
+        if (!imageUrl) {
+          throw new Error('未获取到图片URL')
+        }
+
+        // 确保URL格式正确
+        let fullUrl = imageUrl
+        if (!imageUrl.startsWith('http')) {
+          fullUrl = `${process.env.VUE_APP_BASE_API}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`
+        }
+
+        this.detailForm.imageUrl = fullUrl
+        return fullUrl
+      }).catch(error => {
+        this.$message.error('图片上传失败: ' + error.message)
+        throw error
+      })
+    },
+
+    // 用于查询用户列表
+    getDetailList() {
+      sportApi.getDetailList(this.searchModel).then((response) => {
+        this.detailList = response.data.rows
+        this.total = response.data.total
+      })
+    },
+
+    openEditUi(id) {
+      console.log(id)
+      if (id == null) {
+        this.title = '新增运动详情'
+      } else {
+        this.title = '修改运动详情'
+        // 根据id查询用户数据
+        sportApi.getDetailById(id).then((response) => {
+          this.detailForm = response.data
+          console.log(this.detailForm)
+        })
+      }
+      this.dialogFormVisible = true
+    },
+
+    deleteDetail(detail) {
+      this.$confirm(`确认删除 ${detail.sportType} 这个运动详情吗？`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      })
+        .then(() => {
+          sportApi.deleteDetailById(detail.id).then((response) => {
             this.$message({
-              type: "info",
-              message: "已取消删除",
-            });
-          });
-      },
-    },
-
-
-    //加载时就查询一次
-    created() {
-      this.getDetailList();
-    },
-  };
-  </script>
+              type: 'success',
+              message: response.message
+            })
+            this.getDetailList()
+          })
+        })
+        .catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+    }
+  }
+}
+</script>
 <style scoped>
 .detail-container {
   padding: 20px;

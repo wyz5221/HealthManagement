@@ -33,7 +33,7 @@ export default {
       const first = matched[0]
 
       if (!this.isDashboard(first)) {
-        matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
+        matched = [{ path: '/dashboard', meta: { title: '首页' }}].concat(matched)
       }
 
       this.levelList = matched.filter(item => item.meta && item.meta.title && item.meta.breadcrumb !== false)
@@ -67,12 +67,30 @@ export default {
 .app-breadcrumb.el-breadcrumb {
   display: inline-block;
   font-size: 14px;
-  line-height: 50px;
-  margin-left: 8px;
+  line-height: 60px;
+  margin-left: 10px;
+
+  .el-breadcrumb__inner,
+  .el-breadcrumb__inner a {
+    font-weight: 500;
+    transition: color 0.3s;
+    color: #ffffff;
+
+    &:hover {
+      color: #e6f7ff;
+    }
+  }
 
   .no-redirect {
-    color: #97a8be;
+    color: #ffffff;
     cursor: text;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .el-breadcrumb__separator {
+    color: #ffffff;
+    margin: 0 8px;
   }
 }
 </style>

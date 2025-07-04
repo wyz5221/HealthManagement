@@ -4,7 +4,7 @@
     <div class="search-container">
       <div class="search-header">
         <div class="search-title">
-          <i class="el-icon-notebook-2"></i>
+          <i class="el-icon-notebook-2" />
           <span>食谱管理</span>
         </div>
       </div>
@@ -20,7 +20,7 @@
             :key="type"
             :label="type"
             :value="type"
-          ></el-option>
+          />
         </el-select>
         <el-input
           v-model="searchModel.name"
@@ -28,24 +28,24 @@
           prefix-icon="el-icon-search"
           clearable
           class="search-input"
-        ></el-input>
+        />
         <el-button
-          @click="getRecipeList"
           type="primary"
           icon="el-icon-search"
           class="search-btn"
+          @click="getRecipeList"
         >查询</el-button>
         <el-button
-          @click="openEditUi(null)"
           type="primary"
           icon="el-icon-plus"
           class="add-btn"
+          @click="openEditUi(null)"
         >新增食谱</el-button>
         <el-button
-          @click="handleExport"
           type="success"
           icon="el-icon-download"
           class="export-btn"
+          @click="handleExport"
         >导出Excel</el-button>
         <el-upload
           action=""
@@ -78,12 +78,12 @@
           label="ID"
           width="70"
           align="center"
-        ></el-table-column>
+        />
         <el-table-column
           prop="name"
           label="食谱名称"
           min-width="150"
-        ></el-table-column>
+        />
         <el-table-column
           prop="imageUrl"
           label="食谱图片"
@@ -97,7 +97,7 @@
               :src="scope.row.imageUrl"
               :preview-src-list="[scope.row.imageUrl]"
               fit="cover"
-            ></el-image>
+            />
             <span v-else>暂无图片</span>
           </template>
         </el-table-column>
@@ -118,13 +118,13 @@
           label="主要食材"
           min-width="200"
           show-overflow-tooltip
-        ></el-table-column>
+        />
         <el-table-column
           prop="steps"
           label="制作步骤"
           min-width="200"
           show-overflow-tooltip
-        ></el-table-column>
+        />
         <el-table-column
           label="操作"
           width="180"
@@ -133,18 +133,18 @@
         >
           <template slot-scope="scope">
             <el-button
-              @click="openEditUi(scope.row.id)"
               type="primary"
               icon="el-icon-edit"
               size="small"
               class="edit-btn"
+              @click="openEditUi(scope.row.id)"
             >编辑</el-button>
             <el-button
-              @click="deleteRecipe(scope.row)"
               type="danger"
               icon="el-icon-delete"
               size="small"
               class="delete-btn"
+              @click="deleteRecipe(scope.row)"
             >删除</el-button>
           </template>
         </el-table-column>
@@ -153,38 +153,38 @@
       <!-- 分页 -->
       <div class="pagination-container">
         <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
           :current-page="searchModel.pageNo"
           :page-sizes="[10, 20, 30, 50]"
           :page-size="searchModel.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total"
           background
-        ></el-pagination>
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
       </div>
     </div>
 
     <!-- 食谱编辑对话框 -->
     <el-dialog
-      @close="clearForm"
       :title="title"
       :visible.sync="dialogFormVisible"
       width="700px"
       :close-on-click-modal="false"
       class="recipe-dialog"
+      @close="clearForm"
     >
       <div class="dialog-content">
-        <el-form :model="recipeForm" ref="recipeFormRef" :rules="rules" label-width="100px">
+        <el-form ref="recipeFormRef" :model="recipeForm" :rules="rules" label-width="100px">
           <el-form-item label="食谱名称" prop="name">
-            <el-input v-model="recipeForm.name" placeholder="请输入食谱名称"></el-input>
+            <el-input v-model="recipeForm.name" placeholder="请输入食谱名称" />
           </el-form-item>
 
           <el-form-item label="餐点类型" prop="mealType">
             <el-select v-model="recipeForm.mealType" placeholder="请选择餐点类型" style="width: 100%">
-              <el-option label="早餐" value="早餐"></el-option>
-              <el-option label="午餐" value="午餐"></el-option>
-              <el-option label="晚餐" value="晚餐"></el-option>
+              <el-option label="早餐" value="早餐" />
+              <el-option label="午餐" value="午餐" />
+              <el-option label="晚餐" value="晚餐" />
             </el-select>
           </el-form-item>
 
@@ -198,41 +198,41 @@
               accept="image/*"
             >
               <img v-if="recipeForm.imageUrl" :src="recipeForm.imageUrl" class="recipe-image">
-              <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+              <i v-else class="el-icon-plus avatar-uploader-icon" />
             </el-upload>
           </el-form-item>
 
           <el-form-item label="食材清单" prop="ingredients">
             <el-input
-              type="textarea"
               v-model="recipeForm.ingredients"
+              type="textarea"
               placeholder="请输入食材清单，用逗号分隔"
               rows="3"
-            ></el-input>
+            />
           </el-form-item>
 
           <el-form-item label="制作步骤" prop="steps">
             <el-input
-              type="textarea"
               v-model="recipeForm.steps"
+              type="textarea"
               placeholder="请输入制作步骤，每一步骤换行"
               rows="5"
-            ></el-input>
+            />
           </el-form-item>
 
           <el-form-item label="营养信息">
             <el-input
-              type="textarea"
               v-model="recipeForm.nutritionInfo"
+              type="textarea"
               placeholder="请输入营养信息"
               rows="3"
-            ></el-input>
+            />
           </el-form-item>
         </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false" class="cancel-btn">取 消</el-button>
-        <el-button type="primary" @click="saveRecipe" class="confirm-btn">确 定</el-button>
+        <el-button class="cancel-btn" @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" class="confirm-btn" @click="saveRecipe">确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -249,26 +249,26 @@ export default {
       recipeForm: {},
       recipeList: [],
       dialogFormVisible: false,
-      title: "",
+      title: '',
       total: 0,
       searchModel: {
         pageNo: 1,
         pageSize: 10,
-        mealType: "",
-        name: ""
+        mealType: '',
+        name: ''
       },
       rules: {
         name: [
-          { required: true, message: "请输入食谱名称", trigger: "blur" }
+          { required: true, message: '请输入食谱名称', trigger: 'blur' }
         ],
         mealType: [
-          { required: true, message: "请选择餐点类型", trigger: "change" }
+          { required: true, message: '请选择餐点类型', trigger: 'change' }
         ],
         ingredients: [
-          { required: true, message: "请输入食材清单", trigger: "blur" }
+          { required: true, message: '请输入食材清单', trigger: 'blur' }
         ],
         steps: [
-          { required: true, message: "请输入制作步骤", trigger: "blur" }
+          { required: true, message: '请输入制作步骤', trigger: 'blur' }
         ]
       }
     }
@@ -305,12 +305,12 @@ export default {
 
     openEditUi(id) {
       if (id == null) {
-        this.title = "新增食谱"
+        this.title = '新增食谱'
         this.recipeForm = {
           mealType: '早餐'
         }
       } else {
-        this.title = "修改食谱"
+        this.title = '修改食谱'
         recipeApi.getRecipeById(id).then(response => {
           this.recipeForm = response.data
         })
@@ -324,35 +324,35 @@ export default {
           recipeApi.saveRecipe(this.recipeForm).then(response => {
             this.$message({
               message: response.message,
-              type: "success"
+              type: 'success'
             })
             this.dialogFormVisible = false
             this.getRecipeList()
           })
         } else {
-          console.log("error submit!!")
+          console.log('error submit!!')
           return false
         }
       })
     },
 
     deleteRecipe(recipe) {
-      this.$confirm(`确认删除 ${recipe.name} 这个食谱吗？`, "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
+      this.$confirm(`确认删除 ${recipe.name} 这个食谱吗？`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       }).then(() => {
         recipeApi.deleteRecipeById(recipe.id).then(response => {
           this.$message({
-            type: "success",
+            type: 'success',
             message: response.message
           })
           this.getRecipeList()
         })
       }).catch(() => {
         this.$message({
-          type: "info",
-          message: "已取消删除"
+          type: 'info',
+          message: '已取消删除'
         })
       })
     },
@@ -389,27 +389,27 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }).then(response => {
-        const imageUrl = response.data.data || response.data.message;
+        const imageUrl = response.data.data || response.data.message
         if (!imageUrl) {
-          throw new Error('未获取到图片URL');
+          throw new Error('未获取到图片URL')
         }
 
         // 确保URL格式正确
-        let fullUrl = imageUrl;
+        let fullUrl = imageUrl
         if (!imageUrl.startsWith('http')) {
-          fullUrl = `${process.env.VUE_APP_BASE_API}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`;
+          fullUrl = `${process.env.VUE_APP_BASE_API}${imageUrl.startsWith('/') ? '' : '/'}${imageUrl}`
         }
 
-        this.recipeForm.imageUrl = fullUrl;
-        return fullUrl;
+        this.recipeForm.imageUrl = fullUrl
+        return fullUrl
       }).catch(error => {
-        this.$message.error('图片上传失败: ' + error.message);
-        throw error;
-      });
+        this.$message.error('图片上传失败: ' + error.message)
+        throw error
+      })
     },
 
     handleExport() {
-      window.location.href = `${process.env.VUE_APP_BASE_API}/recipe/export?mealType=${this.searchModel.mealType || ''}`;
+      window.location.href = `${process.env.VUE_APP_BASE_API}/recipe/export?mealType=${this.searchModel.mealType || ''}`
     },
 
     //
@@ -616,7 +616,6 @@ export default {
 .import-upload {
   display: inline-block;
 }
-
 
 @media (max-width: 768px) {
   .search-content {

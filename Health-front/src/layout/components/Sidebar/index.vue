@@ -1,13 +1,16 @@
 <template>
   <div :class="{'has-logo':showLogo}" class="sidebar-container">
     <logo v-if="showLogo" :collapse="isCollapse" />
-    <div class="sidebar-title-container" v-if="!isCollapse && !showLogo">
+    <div v-if="!isCollapse && !showLogo" class="sidebar-title-container">
       <h2 class="sidebar-main-title">
         个人健康管理系统
       </h2>
     </div>
-    <el-scrollbar wrap-class="scrollbar-wrapper" :native="false"
-                  style="height: calc(100vh - 60px)">
+    <el-scrollbar
+      wrap-class="scrollbar-wrapper"
+      :native="false"
+      style="height: calc(100vh - 60px)"
+    >
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
@@ -40,7 +43,7 @@ export default {
 
     ]),
     routes() {
-      return this.$router.options.routes.concat(global.myRoutes);
+      return this.$router.options.routes.concat(global.myRoutes)
     },
     activeMenu() {
       const route = this.$route

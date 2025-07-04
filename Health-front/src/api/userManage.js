@@ -1,19 +1,19 @@
 import request from '@/utils/request'
 
-export default{
-  getUserList(searchModel){
+export default {
+  getUserList(searchModel) {
     return request({
-      //路径
+      // 路径
       url: '/user/list',
       method: 'get',
-      //数据
-      params:{
-        pageNo:searchModel.pageNo,
-        pageSize:searchModel.pageSize,
-        username:searchModel.username,
-        phone:searchModel.phone
+      // 数据
+      params: {
+        pageNo: searchModel.pageNo,
+        pageSize: searchModel.pageSize,
+        username: searchModel.username,
+        phone: searchModel.phone
       }
-    });
+    })
   },
 
   addUser(user) {
@@ -22,161 +22,143 @@ export default{
       method: 'post',
       data: user
     }).catch(error => {
-      console.log(error.response.data);
-      throw error;
-    });
+      console.log(error.response.data)
+      throw error
+    })
   },
 
-  getUserById(id){
+  getUserById(id) {
     return request({
       url: `/user/${id}`,
-      method: 'get',
-    });
+      method: 'get'
+    })
   },
 
-  saveUser(user){
-    if(user.id == null && user.id == undefined){
-      return this.addUser(user);
+  saveUser(user) {
+    if (user.id == null && user.id == undefined) {
+      return this.addUser(user)
     }
-    return this.updateUser(user);
+    return this.updateUser(user)
   },
 
-
-  updateUser(user){
+  updateUser(user) {
     return request({
       url: '/user/update',
       method: 'put',
       data: user
-    });
+    })
   },
 
-
-  deleteUserById(id){
+  deleteUserById(id) {
     return request({
       url: `/user/${id}`,
       method: 'delete'
-    });
+    })
   },
 
-  register(registerData){
+  register(registerData) {
     return request({
       url: '/user/register',
       method: 'post',
       data: registerData
-    });
+    })
   },
 
-  getUserId(){
+  getUserId() {
     return request({
       url: `/user/getUserId`,
-      method: 'get',
-    });
+      method: 'get'
+    })
   },
 
-  getBodyInfo(){
+  getBodyInfo() {
     return request({
       url: `/user/getBodyInfo`,
-      method: 'get',
-    });
+      method: 'get'
+    })
   },
 
-  getBodyList(searchModel){
+  getBodyList(searchModel) {
     return request({
-      //路径
+      // 路径
       url: '/user/getBodyList',
       method: 'get',
-      //数据
-      params:{
-        id:searchModel.id,
-        pageNo:searchModel.pageNo,
-        pageSize:searchModel.pageSize,
-        name:searchModel.name,
+      // 数据
+      params: {
+        id: searchModel.id,
+        pageNo: searchModel.pageNo,
+        pageSize: searchModel.pageSize,
+        name: searchModel.name
       }
-    });
+    })
   },
 
-  getBodyById(id){
+  getBodyById(id) {
     return request({
       url: `/user/getBodyById/${id}`,
-      method: 'get',
-    });
+      method: 'get'
+    })
   },
 
-  updateBody(body){
+  updateBody(body) {
     return request({
       url: '/user/updateBody',
       method: 'put',
       data: body
-    });
+    })
   },
 
-  deleteBodyById(id){
+  deleteBodyById(id) {
     return request({
       url: `/user/deleteBodyById/${id}`,
       method: 'delete'
-    });
+    })
   },
 
-
-
-  changePassword(user){
+  changePassword(user) {
     return request({
       url: '/user/changePassword',
       method: 'put',
       data: user
-    });
+    })
   },
 
-
-  //用户管理自己的身体信息
-  getUserBodyList(searchModel){
+  // 用户管理自己的身体信息
+  getUserBodyList(searchModel) {
     return request({
-      //路径
+      // 路径
       url: '/user/getUserBodyList',
       method: 'get',
-      //数据
-      params:{
-        id:searchModel.id,
-        pageNo:searchModel.pageNo,
-        pageSize:searchModel.pageSize,
-        name:searchModel.name,
+      // 数据
+      params: {
+        id: searchModel.id,
+        pageNo: searchModel.pageNo,
+        pageSize: searchModel.pageSize,
+        name: searchModel.name
       }
-    });
+    })
   },
 
-
-  getUserBodyById(notesid){
+  getUserBodyById(notesid) {
     return request({
       url: `/user/getUserBodyById/${notesid}`,
-      method: 'get',
-    });
+      method: 'get'
+    })
   },
 
-
-
-  updateUserBody(body){
+  updateUserBody(body) {
     return request({
       url: '/user/updateUserBody',
       method: 'put',
       data: body
-    });
+    })
   },
 
-
-  deleteUserBodyById(id){
+  deleteUserBodyById(id) {
     return request({
       url: `/user/deleteUserBodyById/${id}`,
       method: 'delete'
-    });
-  },
-
-  // 新增批量删除用户
-  batchDeleteUser(ids) {
-    return request({
-      url: '/user/batchDelete',
-      method: 'post',
-      data: ids
-    });
+    })
   }
 
 }

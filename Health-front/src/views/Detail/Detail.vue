@@ -3,11 +3,11 @@
     <!-- 顶部导航栏 -->
     <div class="header">
       <div class="back-button" @click="home">
-        <i class="el-icon-arrow-left"></i>
+        <i class="el-icon-arrow-left" />
         <span>返回运动列表</span>
       </div>
       <div class="sport-title">{{ detailInfo.sportType }}</div>
-      <div class="placeholder"></div>
+      <div class="placeholder" />
     </div>
 
     <!-- 主要内容区域 -->
@@ -21,7 +21,7 @@
             class="sport-image"
           >
             <div slot="error" class="image-placeholder">
-              <i class="el-icon-picture-outline"></i>
+              <i class="el-icon-picture-outline" />
             </div>
           </el-image>
           <div class="sport-type-badge">{{ detailInfo.sportType }}</div>
@@ -29,14 +29,14 @@
 
         <div class="sport-info">
           <h1 class="info-title">
-            <i class="el-icon-data-analysis"></i>
+            <i class="el-icon-data-analysis" />
             运动详情
           </h1>
 
           <div class="info-grid">
             <div class="info-item">
               <div class="info-label">
-                <i class="el-icon-time"></i>
+                <i class="el-icon-time" />
                 适宜时间
               </div>
               <div class="info-value">{{ detailInfo.suitableTime }}</div>
@@ -44,7 +44,7 @@
 
             <div class="info-item">
               <div class="info-label">
-                <i class="el-icon-bangzhu"></i>
+                <i class="el-icon-bangzhu" />
                 运动心率
               </div>
               <div class="info-value">{{ detailInfo.suitableHeartRate }}</div>
@@ -52,7 +52,7 @@
 
             <div class="info-item">
               <div class="info-label">
-                <i class="el-icon-date"></i>
+                <i class="el-icon-date" />
                 适宜频率
               </div>
               <div class="info-value">{{ detailInfo.suitableFrequency }}</div>
@@ -60,7 +60,7 @@
 
             <div class="info-item">
               <div class="info-label">
-                <i class="el-icon-odometer"></i>
+                <i class="el-icon-odometer" />
                 推荐速度
               </div>
               <div class="info-value">{{ detailInfo.recommendedSpeed || '无' }}</div>
@@ -77,7 +77,7 @@
             :class="{ active: showForbiddenDiseases }"
             @click="showBox('forbiddenDiseases')"
           >
-            <i class="el-icon-warning-outline"></i>
+            <i class="el-icon-warning-outline" />
             禁忌疾病
           </button>
           <button
@@ -85,7 +85,7 @@
             :class="{ active: showMethodIntroduction }"
             @click="showBox('methodIntroduction')"
           >
-            <i class="el-icon-document"></i>
+            <i class="el-icon-document" />
             方法介绍
           </button>
           <button
@@ -93,32 +93,32 @@
             :class="{ active: showAttentionItems }"
             @click="showBox('attentionItems')"
           >
-            <i class="el-icon-info"></i>
+            <i class="el-icon-info" />
             注意事项
           </button>
         </div>
 
         <div class="tab-content">
           <transition name="fade" mode="out-in">
-            <div class="content-card" v-if="showForbiddenDiseases">
+            <div v-if="showForbiddenDiseases" class="content-card">
               <div class="content-header">
-                <i class="el-icon-warning-outline"></i>
+                <i class="el-icon-warning-outline" />
                 {{ detailInfo.sportType }}禁忌疾病
               </div>
               <div class="content-body">{{ detailInfo.disease || '暂无相关禁忌疾病信息' }}</div>
             </div>
 
-            <div class="content-card" v-else-if="showMethodIntroduction">
+            <div v-else-if="showMethodIntroduction" class="content-card">
               <div class="content-header">
-                <i class="el-icon-document"></i>
+                <i class="el-icon-document" />
                 {{ detailInfo.sportType }}方法介绍
               </div>
               <div class="content-body">{{ detailInfo.method || '暂无相关方法介绍' }}</div>
             </div>
 
-            <div class="content-card" v-else-if="showAttentionItems">
+            <div v-else-if="showAttentionItems" class="content-card">
               <div class="content-header">
-                <i class="el-icon-info"></i>
+                <i class="el-icon-info" />
                 {{ detailInfo.sportType }}注意事项
               </div>
               <div class="content-body">{{ detailInfo.notes || '暂无相关注意事项' }}</div>
@@ -137,26 +137,26 @@ export default {
       detailInfo: {},
       showForbiddenDiseases: true,
       showMethodIntroduction: false,
-      showAttentionItems: false,
-    };
+      showAttentionItems: false
+    }
   },
   mounted() {
-    const detailInfo = this.$route.query;
-    this.detailInfo = detailInfo;
+    const detailInfo = this.$route.query
+    this.detailInfo = detailInfo
   },
   methods: {
     getSportImage(detail) {
       // 优先使用用户上传的图片
       if (detail && detail.imageUrl) {
-        console.log('当前图片URL:', detail.imageUrl); // 打印URL检查
+        console.log('当前图片URL:', detail.imageUrl) // 打印URL检查
         // 判断是否是完整URL（包含http://或https://）
         if (detail.imageUrl.startsWith('http')) {
-          return detail.imageUrl; // 直接使用完整URL
+          return detail.imageUrl // 直接使用完整URL
         } else {
           // 处理相对路径，拼接基础URL
-          const baseUrl = process.env.VUE_APP_BASE_API || window.location.origin;
-          const fullUrl = `${baseUrl}${detail.imageUrl.startsWith('/') ? '' : '/'}${detail.imageUrl}`;
-          return fullUrl;
+          const baseUrl = process.env.VUE_APP_BASE_API || window.location.origin
+          const fullUrl = `${baseUrl}${detail.imageUrl.startsWith('/') ? '' : '/'}${detail.imageUrl}`
+          return fullUrl
         }
       }
 
@@ -182,23 +182,23 @@ export default {
         '瑜伽': 'https://img0.baidu.com/it/u=1842809601,1348925751&fm=253&fmt=auto&app=120&f=JPEG?w=642&h=500',
         '跳绳': 'https://img2.baidu.com/it/u=2538064209,1984137071&fm=253&fmt=auto&app=120&f=JPEG?w=1200&h=800',
         '越野跑': 'https://p5.toutiaoimg.com/origin/pgc-image/09530a0e2471422f9854cc7436c4ad97?from=pc'
-      };
+      }
 
       // 如果运动类型在映射中，返回对应的图片，否则返回默认图片
-      return defaultImageMap[detail.sportType] || 'https://p5.toutiaoimg.com/origin/pgc-image/09530a0e2471422f9854cc7436c4ad97?from=pc';
+      return defaultImageMap[detail.sportType] || 'https://p5.toutiaoimg.com/origin/pgc-image/09530a0e2471422f9854cc7436c4ad97?from=pc'
     },
 
     showBox(box) {
-      this.showForbiddenDiseases = box === 'forbiddenDiseases';
-      this.showMethodIntroduction = box === 'methodIntroduction';
-      this.showAttentionItems = box === 'attentionItems';
+      this.showForbiddenDiseases = box === 'forbiddenDiseases'
+      this.showMethodIntroduction = box === 'methodIntroduction'
+      this.showAttentionItems = box === 'attentionItems'
     },
 
     home() {
-      this.$router.go(-1);
+      this.$router.go(-1)
     }
   }
-};
+}
 </script>
 
 <style scoped>

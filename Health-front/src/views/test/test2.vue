@@ -3,21 +3,21 @@
     <!-- 顶部统计卡片区域 -->
     <div class="statistics-cards">
       <div class="stat-card">
-        <div class="stat-icon"><i class="el-icon-data-analysis"></i></div>
+        <div class="stat-icon"><i class="el-icon-data-analysis" /></div>
         <div class="stat-content">
           <div class="stat-title">健康评分</div>
           <div class="stat-value">{{ this.score }}</div>
         </div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon"><i class="el-icon-user"></i></div>
+        <div class="stat-icon"><i class="el-icon-user" /></div>
         <div class="stat-content">
           <div class="stat-title">BMI指数</div>
           <div class="stat-value">{{ this.bmiM }}</div>
         </div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon"><i class="el-icon-s-data"></i></div>
+        <div class="stat-icon"><i class="el-icon-s-data" /></div>
         <div class="stat-content">
           <div class="stat-title">基础代谢率</div>
           <div class="stat-value">{{ this.BMR }}%</div>
@@ -30,7 +30,7 @@
       <!-- 身体信息卡片 -->
       <div class="info-card body-info">
         <div class="card-header">
-          <i class="el-icon-user"></i>
+          <i class="el-icon-user" />
           <h2>身体信息</h2>
         </div>
         <div class="card-body">
@@ -69,7 +69,7 @@
             </div>
           </div>
           <div class="info-image">
-            <el-image :src="'https://img2.baidu.com/it/u=3739143803,1113922112&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'" class="card-img"></el-image>
+            <el-image :src="'https://img2.baidu.com/it/u=3739143803,1113922112&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500'" class="card-img" />
           </div>
         </div>
       </div>
@@ -79,7 +79,7 @@
         <!-- 生活习惯分析卡片 -->
         <div class="info-card lifestyle-analysis">
           <div class="card-header">
-            <i class="el-icon-s-operation"></i>
+            <i class="el-icon-s-operation" />
             <h2>生活习惯分析</h2>
           </div>
           <div class="card-body">
@@ -96,7 +96,7 @@
               </div>
             </div>
             <div class="analysis-image">
-              <el-image :src="'https://img2.baidu.com/it/u=1105778939,2489899437&fm=253&fmt=auto&app=138&f=JPEG?w=304&h=420'" class="card-img"></el-image>
+              <el-image :src="'https://img2.baidu.com/it/u=1105778939,2489899437&fm=253&fmt=auto&app=138&f=JPEG?w=304&h=420'" class="card-img" />
             </div>
           </div>
         </div>
@@ -104,16 +104,16 @@
         <!-- 能量消耗状况卡片 -->
         <div class="info-card energy-consumption">
           <div class="card-header">
-            <i class="el-icon-data-line"></i>
+            <i class="el-icon-data-line" />
             <h2>基础能量消耗状况</h2>
           </div>
           <div class="card-body chart-container">
             <div class="chart-item">
-              <el-progress type="circle" :percentage="Number(this.Standard_hight)" :stroke-width="10" :width="150"></el-progress>
+              <el-progress type="circle" :percentage="Number(this.Standard_hight)" :stroke-width="10" :width="150" />
               <div class="chart-label">到达身体年龄的百分比</div>
             </div>
             <div class="chart-item">
-              <el-progress type="circle" :percentage="Number(this.BMR)" color="#409EFF" :stroke-width="10" :width="150"></el-progress>
+              <el-progress type="circle" :percentage="Number(this.BMR)" color="#409EFF" :stroke-width="10" :width="150" />
               <div class="chart-label">基本能量消耗</div>
             </div>
           </div>
@@ -125,12 +125,12 @@
         <!-- 肥胖分析卡片 -->
         <div class="info-card obesity-analysis">
           <div class="card-header">
-            <i class="el-icon-s-help"></i>
+            <i class="el-icon-s-help" />
             <h2>肥胖分析</h2>
           </div>
           <div class="card-body">
             <div class="progress-container">
-              <el-progress :percentage="percentage" :show-text="false" :stroke-width="15" class="custom-progress"></el-progress>
+              <el-progress :percentage="percentage" :show-text="false" :stroke-width="15" class="custom-progress" />
               <div class="progress-markers">
                 <span>偏瘦</span>
                 <span>正常</span>
@@ -149,7 +149,7 @@
               </div>
             </div>
             <div class="analysis-image">
-              <el-image :src="'https://dingyue.ws.126.net/A=IQqxW4IOFs0I2qwUfGxXB0hasjYsYCn6bJTPbjF19rs1563354766400compressflag.jpg'" class="card-img"></el-image>
+              <el-image :src="'https://dingyue.ws.126.net/A=IQqxW4IOFs0I2qwUfGxXB0hasjYsYCn6bJTPbjF19rs1563354766400compressflag.jpg'" class="card-img" />
             </div>
           </div>
         </div>
@@ -157,7 +157,7 @@
         <!-- 疾病分析卡片 -->
         <div class="info-card disease-analysis">
           <div class="card-header">
-            <i class="el-icon-warning-outline"></i>
+            <i class="el-icon-warning-outline" />
             <h2>疾病分析</h2>
           </div>
           <div class="card-body">
@@ -182,7 +182,7 @@
         <!-- 视力分析卡片 -->
         <div class="info-card vision-analysis">
           <div class="card-header">
-            <i class="el-icon-view"></i>
+            <i class="el-icon-view" />
             <h2>视力分析</h2>
           </div>
           <div class="card-body">
@@ -201,7 +201,7 @@
               </div>
             </div>
             <div class="analysis-image">
-              <el-image :src="'https://img2.baidu.com/it/u=2632046057,3513146628&fm=253&fmt=auto&app=138&f=JPEG?w=667&h=500'" class="card-img"></el-image>
+              <el-image :src="'https://img2.baidu.com/it/u=2632046057,3513146628&fm=253&fmt=auto&app=138&f=JPEG?w=667&h=500'" class="card-img" />
             </div>
           </div>
         </div>
@@ -209,7 +209,7 @@
         <!-- 体型判断卡片 -->
         <div class="info-card body-type">
           <div class="card-header">
-            <i class="el-icon-user"></i>
+            <i class="el-icon-user" />
             <h2>体型判断</h2>
           </div>
           <div class="card-body">
@@ -224,7 +224,7 @@
               </div>
             </div>
             <div class="analysis-image">
-              <el-image :src="'https://image.16pic.com/00/27/09/16pic_2709384_s.jpg?imageView2/0/format/png'" class="card-img"></el-image>
+              <el-image :src="'https://image.16pic.com/00/27/09/16pic_2709384_s.jpg?imageView2/0/format/png'" class="card-img" />
             </div>
           </div>
         </div>
@@ -234,102 +234,122 @@
 </template>
 
 <script>
-import userApi from "@/api/userManage";
+import userApi from '@/api/userManage'
 export default {
   data() {
     return {
-      bodyInfo: "",
+      bodyInfo: '',
       bmi: null,
-      risk: "",
+      risk: '',
       Standard_hight: null,
       metabolic_rate: null,
       BMR: null,
-      habits: "",
+      habits: '',
       score: 100,
-      habits_count: [],
-    };
+      habits_count: []
+    }
   },
 
   computed: {
     bmiM() {
       // 从bodyInfo中获取身高和体重的值，并转换为 Number 类型
-      const weight = Number(this.bodyInfo.weight);
+      const weight = Number(this.bodyInfo.weight)
       // 计算BMI值
-      const bmiValue = weight / (this.bodyInfo.height * this.bodyInfo.height);
+      const bmiValue = weight / (this.bodyInfo.height * this.bodyInfo.height)
       // 返回计算结果并保留两位小数
-      this.bmi = bmiValue.toFixed(2);
-      return bmiValue.toFixed(2);
+      this.bmi = bmiValue.toFixed(2)
+      return bmiValue.toFixed(2)
     },
 
     percentage() {
-      return Math.round((this.bmi / 35) * 100);
+      return Math.round((this.bmi / 35) * 100)
     },
     visionType() {
-      const vision = this.bodyInfo.vision;
+      const vision = this.bodyInfo.vision
       if (vision >= 600) {
-        return "高度近视";
+        return '高度近视'
       } else if (vision >= 300 && vision <= 600) {
-        return "中度近视";
+        return '中度近视'
       } else if (vision > 0 && vision <= 300) {
-        return "轻度近视";
+        return '轻度近视'
       } else if (vision === 0) {
-        return "没有近视";
+        return '没有近视'
       }
     },
 
     visionSuggestion() {
-      const visionType = this.visionType;
-      if (visionType === "高度近视") {
-        return "积极治疗，建议就医";
-      } else if (visionType === "中度近视") {
-        return "注意保护眼睛，建议定期检查视力";
-      } else if (visionType === "轻度近视") {
-        return "加强锻炼，注意用眼卫生";
-      } else if (visionType === "没有近视") {
-        return "很好，保持生活习惯，注意保护眼睛";
+      const visionType = this.visionType
+      if (visionType === '高度近视') {
+        return '积极治疗，建议就医'
+      } else if (visionType === '中度近视') {
+        return '注意保护眼睛，建议定期检查视力'
+      } else if (visionType === '轻度近视') {
+        return '加强锻炼，注意用眼卫生'
+      } else if (visionType === '没有近视') {
+        return '很好，保持生活习惯，注意保护眼睛'
       }
     },
 
     bodyType() {
       if (this.bmiM >= 28) {
-        return "肥胖型";
+        return '肥胖型'
       } else if (this.bmiM > 24 && this.bmiM <= 28) {
-        return "超重体型";
+        return '超重体型'
       } else if (this.bmiM >= 0 && this.bmiM <= 24) {
-        return "正常体型";
+        return '正常体型'
       }
     },
 
     determineHealthRisk() {
       if (this.bmiM >= 28) {
-        return "您的体重太大了，请马上减肥";
+        return '您的体重太大了，请马上减肥'
       } else if (this.bmiM > 24 && this.bmiM <= 28) {
-        return "您的体重过大，请及时减肥";
+        return '您的体重过大，请及时减肥'
       } else if (this.bmiM >= 0 && this.bmiM <= 24) {
-        return "您的体重正常，请保持健康生活";
+        return '您的体重正常，请保持健康生活'
       }
     },
 
     Disease_risk() {
       if (this.bmiM >= 28) {
-        return "心脏病、中风、高血压和高胆固醇，增加心脏病，还有糖尿病、呼吸系统疾病、关节炎等风险";
+        return '心脏病、中风、高血压和高胆固醇，增加心脏病，还有糖尿病、呼吸系统疾病、关节炎等风险'
       } else if (this.bmiM > 24 && this.bmiM <= 28) {
-        return "容易导致高血压、高胆固醇、心脏病、中风、患糖尿病的风险，胰岛素分泌异常以及呼吸系统疾病";
+        return '容易导致高血压、高胆固醇、心脏病、中风、患糖尿病的风险，胰岛素分泌异常以及呼吸系统疾病'
       } else if (this.bmiM >= 0 && this.bmiM <= 24) {
-        return "风险不大，但是要保证摄入足够的蛋白质、碳水化合物和脂肪";
+        return '风险不大，但是要保证摄入足够的蛋白质、碳水化合物和脂肪'
       }
     },
 
     bodyTypeSuggestion() {
-      if (this.bodyType === "肥胖型") {
-        return "控制饮食，增加运动量，并寻求专业医师的指导。";
-      } else if (this.bodyType === "超重体型") {
-        return "注意饮食健康，控制摄入量，并加强有氧运动，提高身体代谢率。";
-      } else if (this.bodyType === "正常体型") {
-        return "保持良好的生活习惯，适当参加运动，均衡饮食，保持身体健康。";
+      if (this.bodyType === '肥胖型') {
+        return '控制饮食，增加运动量，并寻求专业医师的指导。'
+      } else if (this.bodyType === '超重体型') {
+        return '注意饮食健康，控制摄入量，并加强有氧运动，提高身体代谢率。'
+      } else if (this.bodyType === '正常体型') {
+        return '保持良好的生活习惯，适当参加运动，均衡饮食，保持身体健康。'
       }
-    },
+    }
   },
+
+  // 深度监听并触发计算和分析
+  watch: {
+    bodyInfo: {
+      deep: true,
+      handler() {
+        this.diseaserisk()
+        this.compareAgeAndHeight()
+        this.supersession()
+        this.habits_customs()
+        this.scoreCom()
+      }
+    }
+  },
+
+  created() {
+    this.getBodyInfo()
+  },
+
+  mounted() {},
 
   methods: {
     async getBodyInfo() {
@@ -337,198 +357,178 @@ export default {
         // 使用解构赋值从 userApi.getBodyInfo() 返回的 Promise 对象中提取 data.bodyList 数组的第一个元素（即 bodyInfo 对象）
         const {
           data: {
-            bodyList: [bodyInfo],
-          },
-        } = await userApi.getBodyInfo();
-        this.bodyInfo = bodyInfo;
+            bodyList: [bodyInfo]
+          }
+        } = await userApi.getBodyInfo()
+        this.bodyInfo = bodyInfo
       } catch (error) {
-        console.log("获取身体信息错误");
+        console.log('获取身体信息错误')
       }
     },
 
     habits_customs() {
-      let habits = [];
-      this.habits_count = habits;
+      const habits = []
+      this.habits_count = habits
       // 判断膳食习惯
-      if (this.bodyInfo.foodTypes === "蔬菜") {
-        habits.push("爱吃蔬菜");
+      if (this.bodyInfo.foodTypes === '蔬菜') {
+        habits.push('爱吃蔬菜')
       }
-      if (this.bodyInfo.foodTypes === "水果") {
-        habits.push("爱吃水果");
+      if (this.bodyInfo.foodTypes === '水果') {
+        habits.push('爱吃水果')
       }
-      if (this.bodyInfo.foodTypes === "肉类") {
-        habits.push("爱吃肉");
+      if (this.bodyInfo.foodTypes === '肉类') {
+        habits.push('爱吃肉')
       }
-      if (this.bodyInfo.foodTypes === "鱼类") {
-        habits.push("爱吃鱼");
+      if (this.bodyInfo.foodTypes === '鱼类') {
+        habits.push('爱吃鱼')
       }
-      if (this.bodyInfo.foodTypes === "豆类") {
-        habits.push("爱吃豆类");
+      if (this.bodyInfo.foodTypes === '豆类') {
+        habits.push('爱吃豆类')
       }
-      if (this.bodyInfo.foodTypes === "谷物") {
-        habits.push("爱吃五谷");
+      if (this.bodyInfo.foodTypes === '谷物') {
+        habits.push('爱吃五谷')
       }
 
       if (this.bodyInfo.bloodSugar > 7) {
-        habits.push("摄入的糖分和生活习惯不好");
+        habits.push('摄入的糖分和生活习惯不好')
       } else {
-        habits.push("血糖水平正常");
+        habits.push('血糖水平正常')
       }
 
       if (this.bodyInfo.bloodPressure > 5.2) {
-        habits.push("高胆固醇饮食");
+        habits.push('高胆固醇饮食')
       } else {
-        habits.push("低胆固醇饮食");
+        habits.push('低胆固醇饮食')
       }
 
       if (this.bodyInfo.heartRate > 100) {
-        habits.push("经常紧张焦虑和压力");
+        habits.push('经常紧张焦虑和压力')
       } else {
-        habits.push("心情还不错");
+        habits.push('心情还不错')
       }
 
       if (this.bodyInfo.vision > 50) {
-        habits.push("熬夜过多过度劳累");
+        habits.push('熬夜过多过度劳累')
       } else {
-        habits.push("准时睡觉");
+        habits.push('准时睡觉')
       }
 
       if (this.bodyInfo.sleepDuration < 8) {
-        habits.push("睡眠不足");
+        habits.push('睡眠不足')
       } else {
-        habits.push("睡眠充足");
+        habits.push('睡眠充足')
       }
 
-      if (this.bodyInfo.sleepQuality === "好") {
-        habits.push("熬夜过多过度劳累");
-      } else if (this.bodyInfo.sleepQuality === "一般") {
-        habits.push("需要注意睡眠质量");
-      } else if (this.bodyInfo.sleepQuality === "差") {
-        habits.push("需要改善睡眠质量");
+      if (this.bodyInfo.sleepQuality === '好') {
+        habits.push('熬夜过多过度劳累')
+      } else if (this.bodyInfo.sleepQuality === '一般') {
+        habits.push('需要注意睡眠质量')
+      } else if (this.bodyInfo.sleepQuality === '差') {
+        habits.push('需要改善睡眠质量')
       }
       if (this.bodyInfo.smoking === true) {
-        habits.push("吸烟");
+        habits.push('吸烟')
       } else {
-        habits.push("不吸烟");
+        habits.push('不吸烟')
       }
 
       if (this.bodyInfo.drinking === true) {
-        habits.push("饮酒");
+        habits.push('饮酒')
       } else {
-        habits.push("未饮酒");
+        habits.push('未饮酒')
       }
       if (this.bodyInfo.exercise === true) {
-        habits.push("积极锻炼");
+        habits.push('积极锻炼')
       } else {
-        habits.push("缺乏运动");
+        habits.push('缺乏运动')
       }
 
       if (this.bodyInfo.waterConsumption < 1000) {
-        habits.push("饮水不足");
+        habits.push('饮水不足')
       } else {
-        habits.push("饮水充足");
+        habits.push('饮水充足')
       }
 
-      this.habits = habits.join("，");
+      this.habits = habits.join('，')
     },
 
     // Drools规则示例
     diseaserisk() {
       if (this.bodyInfo.bloodPressure >= 90) {
-        this.risk += "高血压，";
+        this.risk += '高血压，'
       }
       if (this.bodyInfo.bloodLipid > 3) {
-        this.risk += "高血脂，";
+        this.risk += '高血脂，'
       }
       if (this.bodyInfo.bloodSugar > 6.1) {
-        this.risk += "糖尿病，";
+        this.risk += '糖尿病，'
       }
       if (this.bodyInfo.drinking > 3) {
-        this.risk += "酗酒，";
+        this.risk += '酗酒，'
       }
       if (this.bodyInfo.exercise < 3) {
-        this.risk += "缺乏运动，";
+        this.risk += '缺乏运动，'
       }
       if (this.bodyInfo.heartRate > 100) {
-        this.risk += "心率过快，";
+        this.risk += '心率过快，'
       }
       if (this.bodyInfo.sleepDuration < 7 || this.bodyInfo.sleepQuality < 3) {
-        this.risk += "睡眠不足，";
+        this.risk += '睡眠不足，'
       }
       if (this.bodyInfo.smoking > 0) {
-        this.risk += "肺炎，";
+        this.risk += '肺炎，'
       }
       if (this.bodyInfo.vision <= 300) {
-        this.risk += "近视，";
+        this.risk += '近视，'
       }
       if (this.bodyInfo.waterConsumption < 1500) {
-        this.risk += "结石";
+        this.risk += '结石'
       }
     },
 
     compareAgeAndHeight() {
-      const height = this.bodyInfo.height;
-      const sex = this.bodyInfo.sex;
-      let Standardhight = null;
-      if (sex === "男") {
-        Standardhight = (height - 80) * 0.7 + 160;
-        this.Standard_hight = ((Standardhight / height) * 1).toFixed(2);
+      const height = this.bodyInfo.height
+      const sex = this.bodyInfo.sex
+      let Standardhight = null
+      if (sex === '男') {
+        Standardhight = (height - 80) * 0.7 + 160
+        this.Standard_hight = ((Standardhight / height) * 1).toFixed(2)
       } else {
-        Standardhight = (height - 70) * 0.6 + 160;
-        this.Standard_hight = ((Standardhight / height) * 1).toFixed(2);
+        Standardhight = (height - 70) * 0.6 + 160
+        this.Standard_hight = ((Standardhight / height) * 1).toFixed(2)
       }
     },
 
     supersession() {
-      const height = this.bodyInfo.height;
-      const weight = this.bodyInfo.weight;
-      const age = this.bodyInfo.age;
+      const height = this.bodyInfo.height
+      const weight = this.bodyInfo.weight
+      const age = this.bodyInfo.age
       const BMR1 = (88.36 + 13.4 * weight + 4.8 * height - 5.7 * age).toFixed(
         2
-      );
-      const reference = 1200; // 假设BMR的参考值为每天所需热量的1200卡路里
+      )
+      const reference = 1200 // 假设BMR的参考值为每天所需热量的1200卡路里
 
-      this.BMR = Math.round((BMR1 / reference) * 100); // 计算BMR占参考值的百分比
+      this.BMR = Math.round((BMR1 / reference) * 100) // 计算BMR占参考值的百分比
     },
 
     scoreCom() {
       if (this.bodyInfo.vision > 30) {
-        this.score = this.score - 25;
+        this.score = this.score - 25
       }
       if ((this.risk.match(/,/g) || []).length > 6) {
-        console.log((this.risk.match(/,/g) || []).length);
-        this.score = this.score - 25;
+        console.log((this.risk.match(/,/g) || []).length)
+        this.score = this.score - 25
       }
 
       if (this.bmi > 24) {
-        this.score = this.score - 25;
+        this.score = this.score - 25
       }
       if (this.Standard_hight < 80) {
-        this.score = this.score - 25;
+        this.score = this.score - 25
       }
-    },
-  },
-
-  //深度监听并触发计算和分析
-  watch: {
-    bodyInfo: {
-      deep: true,
-      handler() {
-        this.diseaserisk();
-        this.compareAgeAndHeight();
-        this.supersession();
-        this.habits_customs();
-        this.scoreCom();
-      },
-    },
-  },
-
-  created() {
-    this.getBodyInfo();
-  },
-
-  mounted() {},
-};
+    }
+  }
+}
 </script>
 
 <style scoped>

@@ -5,7 +5,7 @@
     <div class="search-container">
       <div class="search-header">
         <div class="search-title">
-          <i class="el-icon-data-analysis"></i>
+          <i class="el-icon-data-analysis" />
           <span>运动知识查询</span>
         </div>
       </div>
@@ -16,12 +16,12 @@
           prefix-icon="el-icon-bicycle"
           clearable
           class="search-input"
-        ></el-input>
+        />
         <el-button
-          @click="getSportList"
           type="primary"
           icon="el-icon-search"
           class="search-btn"
+          @click="getSportList"
         >查询</el-button>
       </div>
     </div>
@@ -30,15 +30,15 @@
     <div class="table-container">
       <div class="table-header">
         <div class="table-title">
-          <i class="el-icon-data-line"></i>
+          <i class="el-icon-data-line" />
           <span>运动知识列表</span>
           <span class="table-count">共 {{ total }} 条记录</span>
         </div>
         <el-button
-          @click="openEditUi(null)"
-           type="primary"
+          type="primary"
           icon="el-icon-plus"
           class="add-btn"
+          @click="openEditUi(null)"
         >新增运动</el-button>
       </div>
       <el-table
@@ -53,13 +53,13 @@
           label="序号"
           width="70"
           align="center"
-        ></el-table-column>
+        />
         <el-table-column
           prop="id"
           label="ID"
           width="70"
           align="center"
-        ></el-table-column>
+        />
         <el-table-column
           prop="sportType"
           label="运动类型"
@@ -68,7 +68,7 @@
         >
           <template slot-scope="scope">
             <div class="sport-type-cell">
-              <i class="el-icon-trophy"></i>
+              <i class="el-icon-trophy" />
               <span>{{ scope.row.sportType }}</span>
             </div>
           </template>
@@ -81,7 +81,7 @@
         >
           <template slot-scope="scope">
             <div class="frequency-cell">
-              <i class="el-icon-date"></i>
+              <i class="el-icon-date" />
               <span>{{ scope.row.suitableFrequency }}</span>
             </div>
           </template>
@@ -94,7 +94,7 @@
         >
           <template slot-scope="scope">
             <div class="time-cell">
-              <i class="el-icon-timer"></i>
+              <i class="el-icon-timer" />
               <span>{{ scope.row.suitableTime }}</span>
             </div>
           </template>
@@ -107,7 +107,7 @@
         >
           <template slot-scope="scope">
             <div class="speed-cell">
-              <i class="el-icon-odometer"></i>
+              <i class="el-icon-odometer" />
               <span>{{ scope.row.recommendedSpeed }}</span>
             </div>
           </template>
@@ -120,7 +120,7 @@
         >
           <template slot-scope="scope">
             <div class="heart-rate-cell">
-              <i class="el-icon-bangzhu"></i>
+              <i class="el-icon-bangzhu" />
               <span>{{ scope.row.suitableHeartRate }}</span>
             </div>
           </template>
@@ -134,131 +134,134 @@
           <template slot-scope="scope">
             <div class="operation-cell">
               <el-button
-                @click="openEditUi(scope.row.id)"
                 type="primary"
                 icon="el-icon-edit"
                 size="small"
                 class="edit-btn"
+                @click="openEditUi(scope.row.id)"
               >编辑</el-button>
               <el-button
-                @click="deleteSport(scope.row)"
                 type="danger"
                 icon="el-icon-delete"
                 size="small"
                 class="delete-btn"
+                @click="deleteSport(scope.row)"
               >删除</el-button>
             </div>
           </template>
         </el-table-column>
       </el-table>
 
-    <!-- 分页功能 -->
+      <!-- 分页功能 -->
       <div class="pagination-container">
         <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
           :current-page="searchModel.pageNo"
           :page-sizes="[5, 10, 20, 30]"
           :page-size="searchModel.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
           :total="total"
           background
-        >
-    </el-pagination>
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+        />
       </div>
     </div>
 
     <!-- 运动知识编辑信息弹出框 -->
     <el-dialog
-      @close="clearForm"
       :title="title"
       :visible.sync="dialogFormVisible"
       width="550px"
       :close-on-click-modal="false"
       center
       class="sport-dialog"
+      @close="clearForm"
     >
       <div class="dialog-content">
-        <el-form :model="sportForm" ref="sportFormRef" label-width="100px">
+        <el-form ref="sportFormRef" :model="sportForm" label-width="100px">
           <el-form-item label="运动类型" prop="sportType">
             <el-input v-model="sportForm.sportType" placeholder="请输入运动类型">
-              <i slot="prefix" class="el-icon-trophy"></i>
+              <i slot="prefix" class="el-icon-trophy" />
             </el-input>
-        </el-form-item>
+          </el-form-item>
 
           <el-form-item label="运动频率" prop="suitableFrequency">
             <el-input v-model="sportForm.suitableFrequency" placeholder="请输入运动频率">
-              <i slot="prefix" class="el-icon-date"></i>
+              <i slot="prefix" class="el-icon-date" />
             </el-input>
-        </el-form-item>
+          </el-form-item>
 
           <el-form-item label="运动时间" prop="suitableTime">
             <el-input v-model="sportForm.suitableTime" placeholder="请输入运动时间">
-              <i slot="prefix" class="el-icon-timer"></i>
+              <i slot="prefix" class="el-icon-timer" />
             </el-input>
-        </el-form-item>
+          </el-form-item>
 
           <el-form-item label="运动速度" prop="recommendedSpeed">
             <el-input v-model="sportForm.recommendedSpeed" placeholder="请输入运动速度">
-              <i slot="prefix" class="el-icon-odometer"></i>
+              <i slot="prefix" class="el-icon-odometer" />
             </el-input>
-        </el-form-item>
+          </el-form-item>
 
           <el-form-item label="运动心率" prop="suitableHeartRate">
             <el-input v-model="sportForm.suitableHeartRate" placeholder="请输入运动心率">
-              <i slot="prefix" class="el-icon-bangzhu"></i>
+              <i slot="prefix" class="el-icon-bangzhu" />
             </el-input>
-        </el-form-item>
-      </el-form>
+          </el-form-item>
+        </el-form>
       </div>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false" class="cancel-btn">取 消</el-button>
-        <el-button type="primary" @click="saveSport" class="confirm-btn">确 定</el-button>
+        <el-button class="cancel-btn" @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" class="confirm-btn" @click="saveSport">确 定</el-button>
       </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import sportApi from "@/api/Function_Menu";
+import sportApi from '@/api/Function_Menu'
 export default {
   data() {
-
     return {
-      sportForm: {}, //初始化为一个空对象
+      sportForm: {}, // 初始化为一个空对象
       sportList: [],
-      //左边宽度
-      formLabelWidth: "135px",
-      //设置默认值不可见
+      // 左边宽度
+      formLabelWidth: '135px',
+      // 设置默认值不可见
       dialogFormVisible: false,
-      title: "",
+      title: '',
       total: 0,
       searchModel: {
         pageNo: 1,
         // 默认显示数量
-        pageSize: 10,
+        pageSize: 10
       },
-      //表单规则配置
+      // 表单规则配置
 
       rules: {
         sportType: [
-          { required: true, message: "请输入运动类型", trigger: "blur" }
+          { required: true, message: '请输入运动类型', trigger: 'blur' }
         ]
-      },
-    };
+      }
+    }
+  },
+
+  // 加载时就查询一次
+  created() {
+    this.getSportList()
   },
 
   methods: {
     saveSport() {
-      let isOk = true;
-      //触发表单的验证
+      let isOk = true
+      // 触发表单的验证
       this.$refs.sportFormRef.validate((valid) => {
         // 这边只有校验失败的时候才会进来,在外面定义一个 isok,校验失败会将他改成 false
-        isOk = valid;
-      });
+        isOk = valid
+      })
 
       if (isOk) {
-        //提交验证给后台
+        // 提交验证给后台
         const newSportType = this.sportForm.sportType
         sportApi.saveSport({
           ...this.sportForm,
@@ -274,97 +277,89 @@ export default {
               sportType: newSportType
             })
           })
-          //成功提示
+          // 成功提示
           this.$message({
             message: response.message,
-            type: "success",
-          });
-          //关闭对话框
-          this.dialogFormVisible = false;
-          //刷新表格数据
-          this.getSportList();
-        });
+            type: 'success'
+          })
+          // 关闭对话框
+          this.dialogFormVisible = false
+          // 刷新表格数据
+          this.getSportList()
+        })
       } else {
-        console.log("error submit!!");
-        return false;
+        console.log('error submit!!')
+        return false
       }
     },
 
-    //清理表单数据
+    // 清理表单数据
     clearForm() {
       this.sportForm = {
-      };
-      //清除表单校验的提示信息
-      this.$refs.sportFormRef.clearValidate();
+      }
+      // 清除表单校验的提示信息
+      this.$refs.sportFormRef.clearValidate()
     },
     handleSizeChange(pageSize) {
-      //数据更新
-      this.searchModel.pageSize = pageSize;
-      this.getSportList();
+      // 数据更新
+      this.searchModel.pageSize = pageSize
+      this.getSportList()
     },
     handleCurrentChange(pageNo) {
-      this.searchModel.pageNo = pageNo;
-      this.getSportList();
+      this.searchModel.pageNo = pageNo
+      this.getSportList()
     },
 
     getSportList() {
       sportApi.getSportList(this.searchModel).then((response) => {
         console.log(response)
         // 将查询结果中的 rows 属性赋值给 sportList
-        this.sportList = response.data.rows;
+        this.sportList = response.data.rows
         // 将查询结果中的 total 属性赋值给 total
-        this.total = response.data.total;
+        this.total = response.data.total
         console.log(this.sportList)
-      });
+      })
     },
-
 
     openEditUi(id) {
       console.log(id)
       if (id == null) {
-        this.title = "新增运动信息";
+        this.title = '新增运动信息'
       } else {
-        this.title = "修改运动信息";
-        //根据id查询用户数据
+        this.title = '修改运动信息'
+        // 根据id查询用户数据
         sportApi.getSportById(id).then((response) => {
-          this.sportForm = response.data;
+          this.sportForm = response.data
           console.log(this.sportForm)
-        });
+        })
       }
-      this.dialogFormVisible = true;
+      this.dialogFormVisible = true
     },
 
-
     deleteSport(sport) {
-      this.$confirm(`确认删除 ${sport.sportType} 这个运动信息吗？`, "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+      this.$confirm(`确认删除 ${sport.sportType} 这个运动信息吗？`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
         .then(() => {
           sportApi.deleteSportById(sport.id).then((response) => {
             this.$message({
-              type: "success",
-              message: response.message,
-            });
-            this.getSportList();
-          });
+              type: 'success',
+              message: response.message
+            })
+            this.getSportList()
+          })
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
-    },
-  },
-
-
-  //加载时就查询一次
-  created() {
-    this.getSportList();
-  },
-};
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+    }
+  }
+}
 </script>
 
 <style scoped>

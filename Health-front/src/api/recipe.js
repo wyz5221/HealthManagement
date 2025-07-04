@@ -5,7 +5,7 @@ export default {
     return request({
       url: '/recipe/getMealTypes',
       method: 'get'
-    });
+    })
   },
 
   getByMealType(mealType) {
@@ -13,7 +13,7 @@ export default {
       url: '/recipe/getByMealType',
       method: 'get',
       params: { mealType }
-    });
+    })
   },
 
   getRecipeList(searchModel) {
@@ -26,14 +26,14 @@ export default {
         mealType: searchModel.mealType,
         name: searchModel.name // 确保传递name参数
       }
-    });
+    })
   },
 
   saveRecipe(recipe) {
     if (recipe.id == null || recipe.id == undefined) {
-      return this.addRecipe(recipe);
+      return this.addRecipe(recipe)
     }
-    return this.updateRecipe(recipe);
+    return this.updateRecipe(recipe)
   },
 
   addRecipe(recipe) {
@@ -42,9 +42,9 @@ export default {
       method: 'post',
       data: recipe
     }).catch(error => {
-      console.log(error.response.data);
-      throw error;
-    });
+      console.log(error.response.data)
+      throw error
+    })
   },
 
   updateRecipe(recipe) {
@@ -52,21 +52,21 @@ export default {
       url: '/recipe/update',
       method: 'put',
       data: recipe
-    });
+    })
   },
 
   getRecipeById(id) {
     return request({
       url: `/recipe/${id}`,
-      method: 'get',
-    });
+      method: 'get'
+    })
   },
 
   deleteRecipeById(id) {
     return request({
       url: `/recipe/${id}`,
       method: 'delete'
-    });
+    })
   },
 
   exportRecipe(params) {
