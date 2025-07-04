@@ -60,19 +60,19 @@
       <el-col :span="8">
         <div class="chart-card">
           <div class="chart-container" ref="myChart"></div>
-        </div>
+    </div>
       </el-col>
 
       <el-col :span="8">
         <div class="chart-card">
           <div id="chart-container" class="chart-container"></div>
-        </div>
+      </div>
       </el-col>
 
       <el-col :span="8">
         <div class="chart-card">
           <div id="chart-containerLine" class="chart-container"></div>
-        </div>
+      </div>
       </el-col>
     </el-row>
   </div>
@@ -485,6 +485,7 @@ export default {
   flex-direction: column;
 }
 
+
 .dashboard-header {
   margin-bottom: 20px;
   padding: 20px;
@@ -602,7 +603,9 @@ export default {
 @media (max-height: 900px) {
   .chart-card {
     height: 400px;
-  }
+
+}
+
 }
 
 @media (min-height: 1000px) {
