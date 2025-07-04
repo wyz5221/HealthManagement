@@ -3,16 +3,16 @@
     <el-card class="box-card" shadow="hover">
       <div slot="header" class="clearfix header">
         <div class="title-container">
-          <i class="el-icon-data-analysis" />
+          <i class="el-icon-data-analysis"></i>
           <span class="title">抑郁自评量表（SDS）测试</span>
         </div>
-        <el-button type="text" icon="el-icon-refresh-right" @click="resetTest">重置</el-button>
+        <el-button type="text" @click="resetTest" icon="el-icon-refresh-right">重置</el-button>
       </div>
 
-      <div v-if="currentStep === 0" class="test-intro">
+      <div class="test-intro" v-if="currentStep === 0">
         <div class="intro-card">
           <div class="intro-header">
-            <i class="el-icon-info-circle" />
+            <i class="el-icon-info-circle"></i>
             <span>测试说明</span>
           </div>
           <div class="intro-content">
@@ -23,7 +23,7 @@
 
         <div class="criteria-card">
           <div class="criteria-header">
-            <i class="el-icon-medal" />
+            <i class="el-icon-medal"></i>
             <span>评分标准</span>
           </div>
           <div class="criteria-content">
@@ -48,8 +48,50 @@
           </div>
         </div>
 
+        <!-- 试题选择模块 -->
+        <div class="paper-selection-container">
+          <div class="paper-selection-header">
+            <i class="el-icon-document"></i>
+            <span>选择测试试卷</span>
+          </div>
+          <div class="paper-selection-content">
+            <el-radio-group v-model="selectedPaperId" @change="handlePaperChange" class="paper-radio-group">
+              <el-radio
+                v-for="paper in paperList"
+                :key="paper.id"
+                :label="paper.id"
+                class="paper-radio-item"
+                :disabled="paper.status === 0">
+                <div class="paper-info">
+                  <div class="paper-name">{{ paper.name }}</div>
+                  <div class="paper-status">
+                    <el-tag
+                      :type="paper.status === 1 ? 'success' : 'danger'"
+                      size="mini"
+                      effect="dark">
+                      {{ paper.status === 1 ? '启用' : '停用' }}
+                    </el-tag>
+                  </div>
+                </div>
+              </el-radio>
+            </el-radio-group>
+
+            <div v-if="paperList.length === 0" class="no-paper-tip">
+              <i class="el-icon-warning"></i>
+              <span>暂无可用的测试试卷，请联系管理员</span>
+            </div>
+          </div>
+        </div>
+
         <div class="action-container">
-          <el-button type="primary" size="large" icon="el-icon-caret-right" @click="startTest">开始测试</el-button>
+          <el-button
+            type="primary"
+            size="large"
+            @click="startTest"
+            icon="el-icon-caret-right"
+            :disabled="!selectedPaperId || !canStartTest">
+            {{ selectedPaperId ? '开始测试' : '请先选择试卷' }}
+          </el-button>
         </div>
       </div>
 
@@ -60,8 +102,8 @@
               :percentage="progressPercentage"
               :color="progressColor"
               :stroke-width="12"
-              :format="progressFormat"
-            />
+              :format="progressFormat">
+            </el-progress>
           </div>
           <div class="progress-info">
             <span class="current-question">第 {{ currentStep }} 题</span>
@@ -74,9 +116,8 @@
           :autoplay="false"
           indicator-position="none"
           :initial-index="currentStep-1"
-          :loop="false"
           @change="handleCarouselChange"
-        >
+          :loop="false">
           <el-carousel-item v-for="(question, index) in questions" :key="index">
             <div class="question-card" :class="{'answered': testForm.answers[index] !== null}">
               <div class="question-header">
@@ -102,8 +143,8 @@
                     <template v-else-if="score === 3">相当多时间（3-4天）</template>
                     <template v-else>绝大部分或全部时间（5-7天）</template>
                   </div>
-                  <div v-if="testForm.answers[index] === score" class="check-icon">
-                    <i class="el-icon-check" />
+                  <div class="check-icon" v-if="testForm.answers[index] === score">
+                    <i class="el-icon-check"></i>
                   </div>
                 </div>
               </div>
@@ -114,9 +155,8 @@
         <div class="navigation-buttons">
           <el-button
             icon="el-icon-arrow-left"
-            :disabled="currentStep <= 1"
             @click="prevQuestion"
-          >
+            :disabled="currentStep <= 1">
             上一题
           </el-button>
 
@@ -127,21 +167,19 @@
           <el-button
             v-if="currentStep < questions.length"
             type="primary"
+            @click="nextQuestion"
             :disabled="testForm.answers[currentStep-1] === null"
             icon="el-icon-arrow-right"
-            icon-position="right"
-            @click="nextQuestion"
-          >
+            iconPosition="right">
             下一题
           </el-button>
 
           <el-button
             v-else
             type="success"
-            :loading="loading"
-            icon="el-icon-check"
             @click="submitTest"
-          >
+            :loading="loading"
+            icon="el-icon-check">
             提交测试
           </el-button>
         </div>
@@ -149,13 +187,13 @@
 
       <div v-else-if="currentStep === questions.length + 1" class="test-summary">
         <div class="summary-header">
-          <i class="el-icon-circle-check" />
+          <i class="el-icon-circle-check"></i>
           <span>测试完成</span>
         </div>
 
         <div class="summary-content">
           <div class="completion-icon">
-            <i class="el-icon-finished" />
+            <i class="el-icon-finished"></i>
           </div>
           <div class="completion-text">
             <h3>您已回答完所有问题</h3>
@@ -174,14 +212,14 @@
           </div>
 
           <div class="review-hint">
-            <i class="el-icon-info-circle" />
+            <i class="el-icon-info-circle"></i>
             <span>您可以使用上一题按钮回顾并修改您的回答</span>
           </div>
         </div>
 
         <div class="action-container">
           <el-button icon="el-icon-arrow-left" @click="prevQuestion">回顾上一题</el-button>
-          <el-button type="success" :loading="loading" icon="el-icon-check" @click="submitTest">提交测试</el-button>
+          <el-button type="success" @click="submitTest" :loading="loading" icon="el-icon-check">提交测试</el-button>
         </div>
       </div>
     </el-card>
@@ -190,9 +228,10 @@
 
 <script>
 import FunctionApi from '@/api/Function_Menu'
-import userApi from '@/api/userManage'
+import userApi from "@/api/userManage"
 import { getInfo } from '@/api/user'
 import { getToken } from '@/utils/auth'
+import { getPaperList, getQuestions } from '@/api/paperManage'
 
 export default {
   name: 'MentalHealthTest',
@@ -202,9 +241,14 @@ export default {
       userId: null,
       currentStep: 0, // 0: intro, 1-20: questions, 21: summary
       testForm: {
-        answers: new Array(20).fill(null)
+        answers: [],
       },
-      questions: [
+      // 试卷相关数据
+      paperList: [],
+      selectedPaperId: null,
+      questions: [],
+      // 默认的SDS题目（当没有选择试卷时使用）
+      defaultQuestions: [
         { text: '我感到情绪沮丧，闷闷不乐', isReverse: false },
         { text: '我感到早晨心情最好', isReverse: true },
         { text: '我要哭或想哭', isReverse: false },
@@ -240,6 +284,9 @@ export default {
       if (this.progressPercentage < 70) return '#e6a23c'
       if (this.progressPercentage < 100) return '#409EFF'
       return '#67c23a'
+    },
+    canStartTest() {
+      return this.selectedPaperId && this.questions.length > 0
     }
   },
   watch: {
@@ -255,12 +302,68 @@ export default {
   },
   created() {
     this.getUserId()
+    this.loadPaperList()
   },
   methods: {
     progressFormat() {
       return `${this.progressPercentage}%`
     },
+    // 加载试卷列表
+    async loadPaperList() {
+      try {
+        const response = await getPaperList()
+        if (response.code === 20000) {
+          this.paperList = response.data || []
+          // 如果有启用的试卷，默认选择第一个
+          const enabledPapers = this.paperList.filter(paper => paper.status === 1)
+          if (enabledPapers.length > 0) {
+            this.selectedPaperId = enabledPapers[0].id
+            await this.handlePaperChange(this.selectedPaperId)
+          }
+        }
+      } catch (error) {
+        console.error('加载试卷列表失败:', error)
+        this.$message.error('加载试卷列表失败')
+      }
+    },
+    // 处理试卷选择变化
+    async handlePaperChange(paperId) {
+      if (!paperId) {
+        this.questions = []
+        this.testForm.answers = []
+        return
+      }
+
+      try {
+        const response = await getQuestions(paperId)
+        if (response.code === 20000) {
+          const questionsData = response.data || []
+          // 将题目数据转换为需要的格式，正确设置isReverse字段
+          this.questions = questionsData.map((q, index) => ({
+            text: q.content,
+            isReverse: q.isReverse === 1, // 根据数据库中的isReverse字段设置
+            sort: q.sort
+          }))
+          // 初始化答案数组
+          this.testForm.answers = new Array(this.questions.length).fill(null)
+        } else {
+          // 如果获取题目失败，使用默认题目
+          this.questions = [...this.defaultQuestions]
+          this.testForm.answers = new Array(this.questions.length).fill(null)
+        }
+      } catch (error) {
+        console.error('加载题目失败:', error)
+        // 使用默认题目
+        this.questions = [...this.defaultQuestions]
+        this.testForm.answers = new Array(this.questions.length).fill(null)
+        this.$message.warning('加载题目失败，使用默认题目')
+      }
+    },
     startTest() {
+      if (!this.canStartTest) {
+        this.$message.warning('请先选择试卷')
+        return
+      }
       this.currentStep = 1
     },
     selectAnswer(index, score) {
@@ -316,10 +419,12 @@ export default {
       this.testForm.answers.forEach((answer, index) => {
         if (answer === null) return
 
-        // 处理反向计分题
+        // 根据isReverse字段决定计分方式
         if (this.questions[index].isReverse) {
-          totalScore += 5 - answer // 反向计分：1->4, 2->3, 3->2, 4->1
+          // 反向计分：1->4, 2->3, 3->2, 4->1
+          totalScore += 5 - answer
         } else {
+          // 正向计分：直接使用原始得分
           totalScore += answer
         }
       })
@@ -382,36 +487,38 @@ export default {
     },
 
     resetTest() {
-      this.testForm.answers = new Array(20).fill(null)
+      this.testForm.answers = new Array(this.questions.length).fill(null)
       this.currentStep = 0
     }
   }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .box-card {
   border-radius: 12px;
   margin-bottom: 20px;
   transition: all 0.3s;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border: none;
 }
 
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding: 16px 20px;
 }
 
 .title-container {
   display: flex;
   align-items: center;
-}
 
-.title-container i {
-  font-size: 22px;
-  margin-right: 12px;
-  color: #409EFF;
+  i {
+    font-size: 22px;
+    margin-right: 12px;
+    color: #409EFF;
+  }
 }
 
 .title {
@@ -431,24 +538,26 @@ export default {
   background-color: #fff;
   border-radius: 10px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
   overflow: hidden;
+  border: 1px solid #ebeef5;
 }
 
 .intro-header, .criteria-header {
-  background-color: #f5f7fa;
+  background: linear-gradient(90deg, #f6f8fb, #f0f4f9);
   padding: 16px 20px;
   display: flex;
   align-items: center;
   font-weight: 600;
   font-size: 16px;
   color: #303133;
-}
+  border-bottom: 1px solid #ebeef5;
 
-.intro-header i, .criteria-header i {
-  color: #409EFF;
-  margin-right: 10px;
-  font-size: 20px;
+  i {
+    color: #409EFF;
+    margin-right: 10px;
+    font-size: 20px;
+  }
 }
 
 .intro-content, .criteria-content {
@@ -479,11 +588,12 @@ export default {
   border-radius: 8px;
   background-color: #f8f9fa;
   transition: all 0.3s;
-}
+  border: 1px solid #e4e7ed;
 
-.criteria-item:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-3px);
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+  }
 }
 
 .criteria-badge {
@@ -527,11 +637,13 @@ export default {
   display: flex;
   justify-content: center;
   padding-top: 20px;
-}
 
-.action-container .el-button {
-  padding: 15px 40px;
-  font-size: 16px;
+  .el-button {
+    padding: 15px 40px;
+    font-size: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(64, 158, 255, 0.2);
+  }
 }
 
 /* 测试内容页 */
@@ -554,15 +666,11 @@ export default {
   justify-content: space-between;
   font-size: 14px;
   color: #909399;
-}
 
-.current-question {
-  font-weight: 600;
-  color: #409EFF;
-}
-
-.total-questions {
-  color: #909399;
+  .current-question {
+    font-weight: 600;
+    color: #409EFF;
+  }
 }
 
 /* 轮播样式 */
@@ -582,15 +690,15 @@ export default {
   padding: 30px 20px;
   box-shadow: 0 1px 15px rgba(0, 0, 0, 0.08);
   transition: all 0.3s;
-  //height: %;
   display: flex;
   flex-direction: column;
   border-left: 5px solid #dcdfe6;
   overflow-y: auto;
-}
+  height: 100%;
 
-.question-card.answered {
-  border-left-color: #409EFF;
+  &.answered {
+    border-left-color: #409EFF;
+  }
 }
 
 .question-header {
@@ -619,6 +727,7 @@ export default {
   font-size: 18px;
   font-weight: 500;
   color: #303133;
+  line-height: 1.6;
 }
 
 .options-container {
@@ -638,32 +747,34 @@ export default {
   cursor: pointer;
   transition: all 0.3s;
   background-color: #f8f9fa;
-  border: none;
-}
+  border: 1px solid #e4e7ed;
+  position: relative;
 
-.option-item:hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  transform: translateY(-3px);
-}
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-3px);
+  }
 
-.option-selected {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
+  &.option-selected {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-color: #409EFF;
+  }
 
-.option-selected.option-score-1 {
-  background-color: rgba(103, 194, 58, 0.15);
-}
+  &.option-selected.option-score-1 {
+    background-color: rgba(103, 194, 58, 0.1);
+  }
 
-.option-selected.option-score-2 {
-  background-color: rgba(230, 162, 60, 0.15);
-}
+  &.option-selected.option-score-2 {
+    background-color: rgba(230, 162, 60, 0.1);
+  }
 
-.option-selected.option-score-3 {
-  background-color: rgba(245, 108, 108, 0.15);
-}
+  &.option-selected.option-score-3 {
+    background-color: rgba(245, 108, 108, 0.1);
+  }
 
-.option-selected.option-score-4 {
-  background-color: rgba(144, 147, 153, 0.15);
+  &.option-selected.option-score-4 {
+    background-color: rgba(144, 147, 153, 0.1);
+  }
 }
 
 .check-icon {
@@ -677,6 +788,12 @@ export default {
   justify-content: space-between;
   align-items: center;
   padding: 0 20px;
+  margin-top: 30px;
+
+  .el-button {
+    padding: 12px 24px;
+    border-radius: 8px;
+  }
 }
 
 .center-info {
@@ -707,11 +824,11 @@ export default {
   font-weight: 600;
   color: #67c23a;
   margin-bottom: 30px;
-}
 
-.summary-header i {
-  font-size: 28px;
-  margin-right: 10px;
+  i {
+    font-size: 28px;
+    margin-right: 10px;
+  }
 }
 
 .summary-content {
@@ -721,6 +838,7 @@ export default {
   padding: 30px;
   text-align: center;
   margin-bottom: 30px;
+  border: 1px solid #ebeef5;
 }
 
 .completion-icon {
@@ -750,18 +868,18 @@ export default {
 
 .stat-item {
   text-align: center;
-}
 
-.stat-label {
-  font-size: 14px;
-  color: #909399;
-  margin-bottom: 5px;
-}
+  .stat-label {
+    font-size: 14px;
+    color: #909399;
+    margin-bottom: 5px;
+  }
 
-.stat-value {
-  font-size: 28px;
-  font-weight: bold;
-  color: #409EFF;
+  .stat-value {
+    font-size: 28px;
+    font-weight: bold;
+    color: #409EFF;
+  }
 }
 
 .review-hint {
@@ -773,11 +891,111 @@ export default {
   background-color: rgba(230, 162, 60, 0.1);
   padding: 10px;
   border-radius: 6px;
+
+  i {
+    margin-right: 8px;
+    font-size: 16px;
+  }
 }
 
-.review-hint i {
-  margin-right: 8px;
+/* 试卷选择部分美化 */
+.paper-selection-container {
+  margin: 30px 0;
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #ebeef5;
+  overflow: hidden;
+}
+
+.paper-selection-header {
+  background: linear-gradient(90deg, #f6f8fb, #f0f4f9);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  font-weight: 600;
   font-size: 16px;
+  color: #303133;
+  border-bottom: 1px solid #ebeef5;
+
+  i {
+    color: #409EFF;
+    margin-right: 10px;
+    font-size: 20px;
+  }
+}
+
+.paper-selection-content {
+  padding: 20px;
+}
+
+.paper-radio-group {
+  width: 100%;
+}
+
+.paper-radio-item {
+  display: block;
+  margin-bottom: 12px;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #fff;
+  border: 1px solid #e4e7ed;
+  transition: all 0.3s;
+  width: 100%;
+
+  &:hover {
+    border-color: #409EFF;
+    box-shadow: 0 2px 8px rgba(64, 158, 255, 0.1);
+  }
+
+  &.is-checked {
+    border-color: #409EFF;
+    background-color: rgba(64, 158, 255, 0.05);
+  }
+}
+
+.paper-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.paper-name {
+  font-size: 15px;
+  color: #303133;
+  font-weight: 500;
+}
+
+.paper-status {
+  margin-left: 10px;
+}
+
+.no-paper-tip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #e6a23c;
+  font-size: 14px;
+  padding: 20px;
+
+  i {
+    margin-right: 8px;
+    font-size: 16px;
+  }
+}
+
+.start-btn {
+  width: 200px;
+  height: 48px;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(64, 158, 255, 0.3);
+  transition: all 0.3s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(64, 158, 255, 0.4);
+  }
 }
 
 @media (max-width: 768px) {
@@ -800,10 +1018,10 @@ export default {
   .navigation-buttons {
     flex-direction: column;
     gap: 15px;
-  }
 
-  .navigation-buttons .el-button {
-    width: 100%;
+    .el-button {
+      width: 100%;
+    }
   }
 
   .center-info {
@@ -814,14 +1032,18 @@ export default {
   .action-container {
     flex-direction: column;
     gap: 15px;
-  }
 
-  .action-container .el-button {
-    width: 100%;
+    .el-button {
+      width: 100%;
+    }
   }
 
   .summary-stats {
     gap: 20px;
+  }
+
+  .paper-selection-container {
+    margin: 20px 0;
   }
 }
 </style>
