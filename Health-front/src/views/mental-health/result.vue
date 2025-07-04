@@ -1,30 +1,28 @@
 <template>
   <div class="app-container">
-    <el-card v-loading="loading" class="box-card" shadow="hover">
+    <el-card class="box-card" v-loading="loading" shadow="hover">
       <div slot="header" class="clearfix header">
         <div class="title-container">
-          <i class="el-icon-data-line" />
+          <i class="el-icon-data-line"></i>
           <span class="title">心理健康检测结果</span>
         </div>
         <el-button type="text" icon="el-icon-time" @click="$router.push('/mental-health/history')">查看历史记录</el-button>
       </div>
-
+      
       <div v-if="testResult" class="result-container">
         <div class="progress-container">
           <div class="progress-wrapper">
-            <el-progress
-              type="dashboard"
-              :percentage="getScorePercentage(testResult.totalScore)"
+            <el-progress type="dashboard" 
+              :percentage="getScorePercentage(testResult.totalScore)" 
               :color="getScoreColor(testResult.totalScore)"
-              :stroke-width="15"
-            >
+              :stroke-width="15">
               <div class="progress-content">
                 <div class="progress-score">{{ testResult.totalScore }}</div>
                 <div class="progress-label">总分</div>
               </div>
             </el-progress>
           </div>
-
+          
           <div class="status-wrapper">
             <div class="status-label">心理状态</div>
             <div class="status-value" :class="getLevelClass(testResult.depressionLevel)">
@@ -35,13 +33,13 @@
             </div>
           </div>
         </div>
-
+        
         <div class="visualization-container">
           <div class="section-header">
-            <i class="el-icon-data-line" />
+            <i class="el-icon-data-line"></i>
             <span>抑郁程度可视化</span>
           </div>
-
+          
           <div class="level-visualization">
             <div class="level-indicator">
               <div class="level-bars">
@@ -59,7 +57,7 @@
                 </div>
               </div>
               <div class="indicator-arrow" :style="getIndicatorPosition(testResult.totalScore)">
-                <i class="el-icon-caret-bottom" />
+                <i class="el-icon-caret-bottom"></i>
               </div>
               <div class="level-scale">
                 <div class="scale-mark">0</div>
@@ -71,12 +69,12 @@
             </div>
           </div>
         </div>
-
+        
         <div class="content-section">
           <div class="left-section">
             <div class="result-card evaluation-card">
               <div class="card-header">
-                <i class="el-icon-s-help" />
+                <i class="el-icon-s-help"></i>
                 <span>心理健康评估</span>
               </div>
               <div class="card-body">
@@ -87,27 +85,27 @@
               </div>
             </div>
           </div>
-
+          
           <div class="right-section">
             <div class="result-card steps-card">
               <div class="card-header">
-                <i class="el-icon-guide" />
+                <i class="el-icon-guide"></i>
                 <span>抑郁程度分级参考</span>
               </div>
               <div class="card-body">
                 <div class="level-steps">
                   <el-steps :active="getActiveStep(testResult.totalScore)" finish-status="success" direction="vertical">
                     <el-step title="无抑郁症状" description="50分以下">
-                      <i slot="icon" class="el-icon-emoji" :class="getActiveStep(testResult.totalScore) === 0 ? 'active-icon' : ''" />
+                      <i slot="icon" class="el-icon-emoji" :class="getActiveStep(testResult.totalScore) === 0 ? 'active-icon' : ''"></i>
                     </el-step>
                     <el-step title="轻度抑郁" description="50-59分">
-                      <i slot="icon" class="el-icon-partly-cloudy" :class="getActiveStep(testResult.totalScore) === 1 ? 'active-icon' : ''" />
+                      <i slot="icon" class="el-icon-partly-cloudy" :class="getActiveStep(testResult.totalScore) === 1 ? 'active-icon' : ''"></i>
                     </el-step>
                     <el-step title="中度抑郁" description="60-69分">
-                      <i slot="icon" class="el-icon-cloudy" :class="getActiveStep(testResult.totalScore) === 2 ? 'active-icon' : ''" />
+                      <i slot="icon" class="el-icon-cloudy" :class="getActiveStep(testResult.totalScore) === 2 ? 'active-icon' : ''"></i>
                     </el-step>
                     <el-step title="重度抑郁" description="70分以上">
-                      <i slot="icon" class="el-icon-heavy-rain" :class="getActiveStep(testResult.totalScore) === 3 ? 'active-icon' : ''" />
+                      <i slot="icon" class="el-icon-heavy-rain" :class="getActiveStep(testResult.totalScore) === 3 ? 'active-icon' : ''"></i>
                     </el-step>
                   </el-steps>
                 </div>
@@ -115,47 +113,47 @@
             </div>
           </div>
         </div>
-
+        
         <div class="suggestion-section">
           <div class="result-card suggestion-card">
             <div class="card-header">
-              <i class="el-icon-warning-outline" />
+              <i class="el-icon-warning-outline"></i>
               <span>建议与指导</span>
             </div>
             <div class="card-body">
               <div class="suggestion-content">
                 <div class="suggestion-icon">
-                  <i class="el-icon-info" :class="getSuggestionIconClass(testResult.depressionLevel)" />
+                  <i class="el-icon-info" :class="getSuggestionIconClass(testResult.depressionLevel)"></i>
                 </div>
                 <div class="suggestion-text">
                   <p>{{ testResult.recommendation }}</p>
                 </div>
               </div>
-
+              
               <div v-if="testResult.totalScore >= 50" class="warning-box">
                 <el-alert
                   title="注意事项"
                   type="warning"
                   description="心理健康测试仅供参考，不能替代专业医生的诊断。如果您有持续的心理困扰，建议咨询专业心理医生或精神科医生。"
                   show-icon
-                  :closable="false"
-                />
+                  :closable="false">
+                </el-alert>
               </div>
             </div>
           </div>
         </div>
-
+        
         <div class="actions-container">
           <el-button type="primary" icon="el-icon-refresh-right" @click="$router.push('/mental-health/test')">再次测试</el-button>
           <el-button type="info" icon="el-icon-document" @click="$router.push('/mental-health/history')">查看历史</el-button>
           <el-button icon="el-icon-s-home" @click="$router.push('/dashboard')">返回首页</el-button>
         </div>
       </div>
-
+      
       <div v-else-if="!loading" class="no-result">
         <el-empty description="未找到测试结果">
           <template slot="image">
-            <i class="el-icon-document-delete empty-icon" />
+            <i class="el-icon-document-delete empty-icon"></i>
           </template>
           <el-button type="primary" icon="el-icon-edit-outline" @click="$router.push('/mental-health/test')">开始测试</el-button>
         </el-empty>
@@ -195,7 +193,7 @@ export default {
             return
           }
         }
-
+        
         // 如果getInfo接口没有返回id，再尝试调用getUserId接口
         const response = await userApi.getUserId()
         if (response.code === 20000) {
@@ -640,17 +638,17 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-
+  
   .status-wrapper {
     margin-left: 0;
     margin-top: 20px;
     align-items: center;
   }
-
+  
   .content-section {
     flex-direction: column;
   }
-
+  
   .left-section, .right-section {
     margin-bottom: 20px;
   }
@@ -661,9 +659,9 @@ export default {
     flex-direction: column;
     gap: 10px;
   }
-
+  
   .actions-container .el-button {
     width: 100%;
   }
 }
-</style>
+</style> 
