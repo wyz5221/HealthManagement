@@ -1,19 +1,47 @@
 <template>
   <div class="app-container">
-    <el-card v-loading="loading" class="box-card" shadow="hover">
+    <el-card class="box-card" v-loading="loading" shadow="hover">
       <div slot="header" class="clearfix header">
         <div class="title-container">
-          <i class="el-icon-time" />
+          <i class="el-icon-time"></i>
           <span class="title">心理健康测试历史记录</span>
         </div>
         <el-button type="text" icon="el-icon-back" @click="$router.push('/mental-health/test')">返回测试</el-button>
       </div>
 
+      <!-- 新增的搜索区域 -->
+      <div class="search-container">
+        <div class="search-header">
+          <div class="search-title">
+            <i class="el-icon-search"></i>
+            <span>历史记录查询</span>
+          </div>
+        </div>
+        <div class="search-content">
+          <el-date-picker
+            v-model="searchModel.month"
+            type="month"
+            placeholder="选择月份"
+            value-format="yyyy-MM"
+            class="search-input"
+            :clearable="true"
+            @change="getTestHistory"
+          ></el-date-picker>
+          <el-button
+            @click="resetSearch"
+            type="info"
+            icon="el-icon-refresh-left"
+            class="search-btn"
+          >重置</el-button>
+        </div>
+      </div>
+
       <div v-if="testHistory && testHistory.length > 0" class="history-container">
         <div class="table-header">
           <div class="filter-container">
-            <i class="el-icon-search" />
+            <i class="el-icon-search"></i>
             <span>历史记录</span>
+            <span class="table-count">共 {{ testHistory.length }} 条记录</span>
           </div>
         </div>
 
@@ -23,17 +51,15 @@
           border
           stripe
           :header-cell-style="{background:'#f5f7fa', color:'#606266'}"
-          :row-class-name="tableRowClassName"
-        >
+          :row-class-name="tableRowClassName">
           <el-table-column
             prop="testDate"
             label="测试日期"
             width="180"
-            align="center"
-          >
+            align="center">
             <template slot-scope="scope">
               <div class="date-cell">
-                <i class="el-icon-date" />
+                <i class="el-icon-date"></i>
                 <span>{{ formatDate(scope.row.testDate) }}</span>
               </div>
             </template>
@@ -42,8 +68,7 @@
             prop="totalScore"
             label="总分"
             width="120"
-            align="center"
-          >
+            align="center">
             <template slot-scope="scope">
               <div class="score-badge">{{ scope.row.totalScore }}</div>
             </template>
@@ -52,8 +77,7 @@
             prop="depressionLevel"
             label="抑郁程度"
             width="150"
-            align="center"
-          >
+            align="center">
             <template slot-scope="scope">
               <el-tag :type="getTagType(scope.row.depressionLevel)" effect="dark">
                 {{ scope.row.depressionLevel }}
@@ -63,11 +87,10 @@
           <el-table-column
             prop="recommendation"
             label="建议"
-            show-overflow-tooltip
-          >
+            show-overflow-tooltip>
             <template slot-scope="scope">
               <div class="recommendation-cell">
-                <i class="el-icon-info-circle" />
+                <i class="el-icon-info-circle"></i>
                 <span>{{ scope.row.recommendation }}</span>
               </div>
             </template>
@@ -75,16 +98,15 @@
           <el-table-column
             label="操作"
             width="120"
-            align="center"
-          >
+            align="center">
             <template slot-scope="scope">
               <el-button
                 size="mini"
                 type="primary"
                 icon="el-icon-view"
                 circle
-                @click="viewResult(scope.row)"
-              />
+                @click="viewResult(scope.row)">
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -95,15 +117,13 @@
             layout="total, prev, pager, next"
             :total="testHistory.length"
             :page-size="10"
-            @current-change="handleCurrentChange"
-          />
-
+            @current-change="handleCurrentChange">
+          </el-pagination>
           <el-button
             type="primary"
             size="small"
             icon="el-icon-edit-outline"
-            @click="$router.push('/mental-health/test')"
-          >
+            @click="$router.push('/mental-health/test')">
             新测试
           </el-button>
         </div>
@@ -112,7 +132,7 @@
       <div v-else-if="!loading" class="empty-container">
         <el-empty description="暂无测试记录">
           <template slot="image">
-            <i class="el-icon-files empty-icon" />
+            <i class="el-icon-files empty-icon"></i>
           </template>
           <el-button type="primary" icon="el-icon-edit-outline" @click="$router.push('/mental-health/test')">开始测试</el-button>
         </el-empty>
@@ -126,12 +146,11 @@
       width="60%"
       top="5vh"
       :close-on-click-modal="false"
-      :show-close="true"
-    >
+      :show-close="true">
       <div v-if="selectedResult" class="dialog-content">
         <div class="dialog-header">
           <div class="dialog-title">
-            <i class="el-icon-data-line" />
+            <i class="el-icon-data-line"></i>
             <span>测试详情</span>
           </div>
           <div class="dialog-date">{{ formatDate(selectedResult.testDate) }}</div>
@@ -140,17 +159,16 @@
         <div class="result-summary">
           <div class="summary-card score-card">
             <div class="card-icon">
-              <i class="el-icon-data-analysis" />
+              <i class="el-icon-data-analysis"></i>
             </div>
             <div class="card-content">
               <div class="card-value">{{ selectedResult.totalScore }}</div>
               <div class="card-label">测试分数</div>
             </div>
           </div>
-
           <div class="summary-card level-card" :class="getLevelClass(selectedResult.depressionLevel)">
             <div class="card-icon">
-              <i class="el-icon-rank" />
+              <i class="el-icon-rank"></i>
             </div>
             <div class="card-content">
               <div class="card-value">{{ selectedResult.depressionLevel }}</div>
@@ -161,23 +179,22 @@
 
         <div class="section-container">
           <div class="section-title">
-            <i class="el-icon-guide" />
+            <i class="el-icon-guide"></i>
             <span>抑郁程度分级参考</span>
           </div>
-
           <div class="level-steps">
             <el-steps :active="getActiveStep(selectedResult.totalScore)" finish-status="success" align-center>
               <el-step title="无抑郁症状" description="50分以下">
-                <i slot="icon" class="el-icon-emoji" :class="getActiveStep(selectedResult.totalScore) === 0 ? 'active-icon' : ''" />
+                <i slot="icon" class="el-icon-emoji" :class="getActiveStep(selectedResult.totalScore) === 0 ? 'active-icon' : ''"></i>
               </el-step>
               <el-step title="轻度抑郁" description="50-59分">
-                <i slot="icon" class="el-icon-partly-cloudy" :class="getActiveStep(selectedResult.totalScore) === 1 ? 'active-icon' : ''" />
+                <i slot="icon" class="el-icon-partly-cloudy" :class="getActiveStep(selectedResult.totalScore) === 1 ? 'active-icon' : ''"></i>
               </el-step>
               <el-step title="中度抑郁" description="60-69分">
-                <i slot="icon" class="el-icon-cloudy" :class="getActiveStep(selectedResult.totalScore) === 2 ? 'active-icon' : ''" />
+                <i slot="icon" class="el-icon-cloudy" :class="getActiveStep(selectedResult.totalScore) === 2 ? 'active-icon' : ''"></i>
               </el-step>
               <el-step title="重度抑郁" description="70分以上">
-                <i slot="icon" class="el-icon-heavy-rain" :class="getActiveStep(selectedResult.totalScore) === 3 ? 'active-icon' : ''" />
+                <i slot="icon" class="el-icon-heavy-rain" :class="getActiveStep(selectedResult.totalScore) === 3 ? 'active-icon' : ''"></i>
               </el-step>
             </el-steps>
           </div>
@@ -185,10 +202,9 @@
 
         <div class="section-container">
           <div class="section-title">
-            <i class="el-icon-warning-outline" />
+            <i class="el-icon-warning-outline"></i>
             <span>建议与指导</span>
           </div>
-
           <div class="recommendation-box">
             <p>{{ selectedResult.recommendation }}</p>
           </div>
@@ -217,7 +233,11 @@ export default {
       selectedResult: null,
       currentPage: 1,
       pageSize: 10,
-      userId: null
+      userId: null,
+      // 新增的搜索模型
+      searchModel: {
+        month: null
+      }
     }
   },
   created() {
@@ -236,7 +256,6 @@ export default {
             return
           }
         }
-
         // 如果getInfo接口没有返回id，再尝试调用getUserId接口
         const response = await userApi.getUserId()
         if (response.code === 20000) {
@@ -260,8 +279,12 @@ export default {
           this.loading = false
           return
         }
-
-        const response = await FunctionApi.getMentalHealthHistory(this.userId)
+        // 修改为带查询条件的请求
+        const params = {
+          userId: this.userId,
+          month: this.searchModel.month
+        }
+        const response = await FunctionApi.getMentalHealthHistory(params)
         if (response.code === 20000) {
           this.testHistory = response.data
         } else {
@@ -273,6 +296,11 @@ export default {
       } finally {
         this.loading = false
       }
+    },
+    // 新增的搜索重置方法
+    resetSearch() {
+      this.searchModel.month = null
+      this.getTestHistory()
     },
     viewResult(row) {
       this.selectedResult = row
@@ -319,16 +347,16 @@ export default {
       if (score < 70) return 2
       return 3
     },
-    tableRowClassName({ row }) {
-      const score = row.totalScore
+    tableRowClassName({row}) {
+      const score = row.totalScore;
       if (score >= 70) {
-        return 'severe-row'
+        return 'severe-row';
       } else if (score >= 60) {
-        return 'moderate-row'
+        return 'moderate-row';
       } else if (score >= 50) {
-        return 'mild-row'
+        return 'mild-row';
       }
-      return 'normal-row'
+      return 'normal-row';
     }
   }
 }
@@ -364,6 +392,60 @@ export default {
   color: #303133;
 }
 
+/* 新增的搜索区域样式 */
+.search-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+  transition: all 0.3s;
+}
+
+.search-container:hover {
+  box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.15);
+}
+
+.search-header {
+  margin-bottom: 20px;
+}
+
+.search-title {
+  border-bottom: 2px solid #409EFF;
+  padding-bottom: 10px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #303133;
+  display: inline-block;
+}
+
+.search-title i {
+  color: #409EFF;
+  margin-right: 5px;
+}
+
+.search-content {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.search-input {
+  width: 240px;
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+
+.search-input >>> .el-input__inner {
+  border-radius: 20px;
+}
+
+.search-btn {
+  border-radius: 20px;
+  padding: 10px 25px;
+  font-weight: 500;
+}
+
 .history-container {
   padding: 10px 0;
 }
@@ -385,6 +467,13 @@ export default {
 .filter-container i {
   color: #409EFF;
   margin-right: 8px;
+}
+
+.table-count {
+  font-size: 14px;
+  color: #909399;
+  font-weight: normal;
+  margin-left: 10px;
 }
 
 .date-cell {
@@ -607,7 +696,6 @@ export default {
   .result-summary {
     flex-direction: column;
   }
-
   .summary-card {
     margin-bottom: 15px;
   }
