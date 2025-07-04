@@ -1,5 +1,5 @@
 <template>
-  <div style="padding: 0 15px;" @click="toggleClick">
+  <div class="hamburger-container" @click="toggleClick">
     <svg
       :class="{'is-active':isActive}"
       class="hamburger"
@@ -30,12 +30,24 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+.hamburger-container {
+  padding: 0 15px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
 .hamburger {
   display: inline-block;
   vertical-align: middle;
   width: 20px;
   height: 20px;
+  fill: #ffffff;
+  transition: all 0.3s;
 }
 
 .hamburger.is-active {

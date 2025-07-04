@@ -1,26 +1,31 @@
 <template>
   <div v-if="!item.hidden">
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
-      <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="onlyOneChild.meta.title" />
-        </el-menu-item>
-      </app-link>
-    </template>
-
-    <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
-      <template slot="title">
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="item.meta.title" />
+    <!-- 情况1：需要显示为下拉菜单的项（有多个子菜单） -->
+    <el-submenu
+      v-if="hasMultipleChildren"
+      :index="resolvePath(item.path)"
+      :popper-append-to-body="false"
+    >
+      <template #title>
+        <item :icon="item.meta.icon" :title="item.meta.title" />
       </template>
+      <!-- 递归渲染子菜单 -->
       <sidebar-item
         v-for="child in item.children"
         :key="child.path"
-        :is-nest="true"
         :item="child"
-        :base-path="resolvePath(child.path)"
-        class="nest-menu"
+        :base-path="resolvePath(item.path)"
       />
     </el-submenu>
+
+    <!-- 情况2：单菜单项（如首页）或单子菜单项 -->
+    <template v-else>
+      <app-link :to="finalPath">
+        <el-menu-item :index="finalPath">
+          <item :icon="finalIcon" :title="finalTitle" />
+        </el-menu-item>
+      </app-link>
+    </template>
   </div>
 </template>
 
@@ -29,14 +34,11 @@ import path from 'path'
 import { isExternal } from '@/utils/validate'
 import Item from './Item'
 import AppLink from './Link'
-import FixiOSBug from './FixiOSBug'
 
 export default {
   name: 'SidebarItem',
   components: { Item, AppLink },
-  mixins: [FixiOSBug],
   props: {
-    // route object
     item: {
       type: Object,
       required: true
@@ -51,36 +53,61 @@ export default {
     }
   },
   data() {
-    // To fix https://github.com/PanJiaChen/vue-admin-template/issues/237
-    // TODO: refactor with render function
-    this.onlyOneChild = null
-    return {}
+    return {
+      onlyOneChild: null
+    }
+  },
+  computed: {
+    // 判断是否需要显示为下拉菜单
+    hasMultipleChildren() {
+      const showingChildren = this.item.children?.filter(child => !child.hidden) || []
+      return showingChildren.length > 1 || (this.item.alwaysShow && showingChildren.length > 0)
+    },
+    // 最终显示的路径
+    finalPath() {
+      return this.resolvePath(
+        this.onlyOneChild?.path || this.item.path
+      )
+    },
+    // 最终显示的图标
+    finalIcon() {
+      return this.onlyOneChild?.meta?.icon || this.item.meta?.icon
+    },
+    // 最终显示的标题
+    finalTitle() {
+      return this.onlyOneChild?.meta?.title || this.item.meta?.title
+    }
+  },
+  created() {
+    // 初始化时处理单子菜单情况
+    if (this.item.children) {
+      this.hasOneShowingChild(this.item.children, this.item)
+    }
   },
   methods: {
+    // 处理单子菜单情况（保留原逻辑）
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {
         if (item.hidden) {
           return false
         } else {
-          // Temp set(will be used if only has one showing child)
           this.onlyOneChild = item
           return true
         }
       })
 
-      // When there is only one child router, the child router is displayed by default
       if (showingChildren.length === 1) {
         return true
       }
 
-      // Show parent if there are no child router to display
       if (showingChildren.length === 0) {
-        this.onlyOneChild = { ... parent, path: '', noShowingChildren: true }
+        this.onlyOneChild = { ...parent, path: '', noShowingChildren: true }
         return true
       }
 
       return false
     },
+    // 路径解析方法
     resolvePath(routePath) {
       if (isExternal(routePath)) {
         return routePath
@@ -93,3 +120,13 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.el-menu-item {
+  &:focus,
+  &:hover {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.1) !important;
+  }
+}
+</style>
