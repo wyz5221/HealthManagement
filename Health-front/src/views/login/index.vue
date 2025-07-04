@@ -64,6 +64,7 @@
       title="用户注册"
       :visible.sync="registerDialogVisible"
       width="500px"
+
       @close="resetRegisterForm"
       center
     >
@@ -83,23 +84,29 @@
         </el-form-item>
         <el-form-item label="电话" prop="phone">
           <el-input v-model="registerForm.phone" placeholder="请输入手机号码"></el-input>
+
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="registerDialogVisible = false">取 消</el-button>
+
         <el-button type="primary" @click="submitRegisterForm" :loading="registerLoading">注 册</el-button>
+
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
+
 import { validUsername } from "@/utils/validate";
 import userApi from "@/api/userManage";
+
 
 export default {
   name: "Login",
   data() {
+
     // 密码强度检测
     const getPasswordStrength = (value) => {
       const hasNumber = /\d/.test(value)
@@ -113,17 +120,22 @@ export default {
         return { level: 'weak', msg: '密码强度：弱（建议使用数字+字母+特殊符号）' }
       }
     }
+
     // 定义验证用户名函数
     const validateUsername = (rule, value, callback) => {
+      // 调用 validUsername 函数判断用户名是否合法
       if (!validUsername(value)) {
         callback(new Error("请输入正确的用户名"));
       } else {
         callback();
       }
     };
+
     // 定义验证密码函数
     const validatePassword = (rule, value, callback) => {
+      // 判断密码是否小于6位
       if (value.length < 6) {
+
         callback(new Error("输入的密码不能少于6位"));
       } else {
         // 密码强度校验
@@ -161,12 +173,16 @@ export default {
         callback(new Error('请输入手机号码'))
       } else if (!phoneReg.test(value)) {
         callback(new Error('请输入正确的手机号码格式'))
+
       } else {
         callback()
       }
     }
+
     return {
+      // 定义表单数据对象
       loginForm: {
+
         username: "",
         password: "",
       },
@@ -181,6 +197,7 @@ export default {
       loading: false,
       passwordType: "password",
       redirect: undefined,
+
       // 注册对话框相关数据
       registerDialogVisible: false,
       registerLoading: false,
@@ -188,6 +205,7 @@ export default {
         username: '',
         password: '',
         confirmPassword: '',
+
         email: '',
         phone: ''
       },
@@ -200,10 +218,12 @@ export default {
           { required: true, message: '请输入密码', trigger: 'blur' },
           { min: 6, message: '密码长度不能少于6位', trigger: 'blur' },
           { validator: validatePassword, trigger: 'blur' }
+
         ],
         confirmPassword: [
           { required: true, message: '请确认密码', trigger: 'blur' },
           { validator: validateConfirmPassword, trigger: 'blur' }
+
         ],
         email: [
           { required: true, message: '请输入邮箱', trigger: 'blur' },
@@ -217,6 +237,7 @@ export default {
       passwordStrengthMsg: '',
       passwordStrengthClass: ''
     };
+
   },
 
   watch: {
@@ -257,9 +278,11 @@ export default {
         this.passwordStrengthClass = 'weak-tip'
       }
     },
+
     handleLogin() {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
+
           this.loading = true; // 显示 loading 状态圈
           this.$store
             .dispatch("user/login", this.loginForm)
@@ -271,10 +294,12 @@ export default {
             .catch(() => {
               this.loading = false; // 隐藏 loading 状态
             });
+
         } else {
           console.log("error submit!!");
           return false;
         }
+
       });
     },
     showRegisterDialog() {
@@ -284,10 +309,12 @@ export default {
       this.$refs.registerForm.validate(valid => {
         if (valid) {
           this.registerLoading = true;
+
           // 构造请求体
           const requestBody = {
             username: this.registerForm.username,
             password: this.registerForm.password,
+
             email: this.registerForm.email,
             phone: this.registerForm.phone
           };
@@ -316,17 +343,20 @@ export default {
     resetRegisterForm() {
       if (this.$refs.registerForm) {
         this.$refs.registerForm.resetFields();
+
       }
       this.registerForm = {
         username: '',
         password: '',
         confirmPassword: '',
+
         email: '',
         phone: ''
       };
       this.passwordStrengthMsg = ''
       this.passwordStrengthClass = ''
       this.registerLoading = false;
+
     }
   },
 };
@@ -337,9 +367,11 @@ export default {
   min-height: 100vh;
   height: 1%;
   width: 100%;
+
   display: flex;
   justify-content: center;
   align-items: center;
+
   background-image: url("../../assets/1.png");
   background-size: 100% 100%;
 }
@@ -367,6 +399,7 @@ export default {
   border-radius: 2px;
 }
 
+
 .el-dialog {
   border-radius: 2px;
   overflow: hidden;
@@ -383,8 +416,9 @@ export default {
 
     .el-dialog__headerbtn .el-dialog__close {
       color: #ffffff;
+
     }
-  }
+
 
   .el-dialog__body {
     padding: 30px 25px;
@@ -393,6 +427,7 @@ export default {
   .el-dialog__footer {
     border-top: 1px solid #eee;
     padding: 15px 20px;
+
   }
 }
 
@@ -417,5 +452,6 @@ export default {
   color: #f56c6c;
   background: #fef0f0;
   border: 1px solid #f56c6c;
+
 }
 </style>

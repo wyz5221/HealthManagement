@@ -120,7 +120,7 @@ export default {
 
     async getBodyNotes() {
       try {
-  
+
         const response = await FunctionApi.getBodyNotes(this.bodyInfo.id);
 
         // 从返回结果中获取 BodyNotesInfo，并赋值给组件的 BodyNotesInfo 属性
@@ -485,6 +485,7 @@ export default {
   flex-direction: column;
 }
 
+
 .dashboard-header {
   margin-bottom: 20px;
   padding: 20px;
@@ -602,7 +603,9 @@ export default {
 @media (max-height: 900px) {
   .chart-card {
     height: 400px;
+
 }
+
 }
 
 @media (min-height: 1000px) {

@@ -76,6 +76,26 @@
       }
     }
 
+    // 增强活动菜单项的样式
+    .el-menu-item.is-active {
+      background-color: $menuHover !important;
+      color: $menuActiveText !important;
+      font-weight: bold !important;
+      position: relative;
+
+      // 添加左侧边框指示器
+      &::before {
+        content: '';
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 4px;
+        background: #ffffff;
+        box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+      }
+    }
+
     .is-active>.el-submenu__title {
       color: $subMenuActiveText !important;
     }
@@ -87,6 +107,24 @@
 
       &:hover {
         background-color: $subMenuHover !important;
+      }
+
+      &.is-active {
+        background-color: $subMenuHover !important;
+        color: $menuActiveText !important;
+        font-weight: bold !important;
+
+        // 添加左侧边框指示器
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 0;
+          height: 100%;
+          width: 4px;
+          background: #ffffff;
+          box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
       }
     }
   }
@@ -191,6 +229,7 @@
     .svg-icon {
       margin-right: 16px;
     }
+
     .sub-el-icon {
       margin-right: 12px;
       margin-left: -2px;
