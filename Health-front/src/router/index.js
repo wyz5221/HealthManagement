@@ -1,3 +1,4 @@
+/* eslint-disable */
 import Vue from 'vue'
 import Router from 'vue-router'
 
@@ -17,12 +18,12 @@ import Layout from '@/layout'
  * redirect: noRedirect           if set noRedirect will no redirect in the breadcrumb
  * name:'router-name'             the name is used by <keep-alive> (must set!!!)
  * meta : {
-    roles: ['admin','editor']    control the page roles (you can set multiple roles)
-    title: 'title'               the name show in sidebar and breadcrumb (recommend set)
-    icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
-    breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
-    activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
-  }
+ roles: ['admin','editor']    control the page roles (you can set multiple roles)
+ title: 'title'               the name show in sidebar and breadcrumb (recommend set)
+ icon: 'svg-name'/'el-icon-x' the icon show in the sidebar
+ breadcrumb: false            if set false, the item will hidden in breadcrumb(default is true)
+ activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
+ }
  */
 
 /**
@@ -51,117 +52,77 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
+      meta: { title: '首页', icon: 'dashboard',affix: true }
     }]
   },
 
   {
-    path: '/example',
-    component: Layout,
-    redirect: '/example/table',
-    name: 'Example',
-    meta: { title: 'Example', icon: 'el-icon-s-help' },
-    children: [
-      {
-        path: 'table',
-        name: 'Table',
-        component: () => import('@/views/table/index'),
-        meta: { title: 'Table', icon: 'table' }
-      },
-      {
-        path: 'tree',
-        name: 'Tree',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'Tree', icon: 'tree' }
-      }
-    ]
+    path: '/register',
+    name: 'Register',
+    component: () => import('@/views/register/register'),
+    hidden: true,
+    meta: { requiresAuth: false }
   },
 
   {
-    path: '/form',
-    component: Layout,
-    children: [
-      {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
-      }
-    ]
+    path: '/detail',
+    name: 'Detail',
+    component: () => import('@/views/Detail/Detail'),
+    hidden: true,
+    meta: { requiresAuth: false }
   },
 
   {
-    path: '/nested',
-    component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
-    meta: {
-      title: 'Nested',
-      icon: 'nested'
-    },
-    children: [
-      {
-        path: 'menu1',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
-      },
-      {
-        path: 'menu2',
-        component: () => import('@/views/nested/menu2/index'),
-        name: 'Menu2',
-        meta: { title: 'menu2' }
-      }
-    ]
+    path: '/change_Password',
+    name: 'Change_Password',
+    component: () => import('@/views/Change_Password/Change_Password'),
+    hidden: true,
+    meta: { requiresAuth: false }
   },
 
+
+  // {
+  //   path: '/RecipeCollection',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'RecipeCollection',
+  //       name: 'RecipeCollection',
+  //       component: () => import('@/views/test/RecipeCollection'),
+  //       meta: { title: '食谱集锦', icon: 'el-icon-s-help' }
+  //     }
+  //   ]
+  // },
+
+  // 心理健康检测结果和历史记录路由（不在导航栏显示）
   {
-    path: 'external-link',
+    path: '/mental-health',
     component: Layout,
+    hidden: true, // 隐藏整个菜单组
     children: [
+      // {
+      //   path: 'result/:id',
+      //   name: 'MentalHealthResult',
+      //   component: () => import('@/views/mental-health/result'),
+      //   meta: { title: '心理健康检测结果', icon: 'el-icon-s-data' }
+      // },
       {
-        path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-        meta: { title: 'External Link', icon: 'link' }
+        path: 'history',
+        name: 'MentalHealthHistory',
+        component: () => import('@/views/mental-health/history'),
+        meta: { title: '心理健康测试历史记录', icon: 'el-icon-time' }
       }
     ]
   },
 
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  // 删除这个独立的健康提醒路由
+  // {
+  //   path: 'healthReminder',
+  //   component: () => import('@/views/test/healthReminder'),
+  //   name: 'healthReminder',
+  //   meta: { title: '健康提醒', icon: 'el-icon-bell' }
+  // }
+
 ]
 
 const createRouter = () => new Router({

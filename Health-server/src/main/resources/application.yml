@@ -6,17 +6,17 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/health?useUnicode=true&characterEncoding=UTF-8&useSSL=false
     username: root
-    password: yss97798
+    password: 1234
     driver-class-name: com.mysql.cj.jdbc.Driver
     jpa:
       hibernate:
         ddl-auto: update
       show-sql: true
 
-      servlet:
-        multipart:
-          max-file-size: 2MB
-          max-request-size: 2MB
+  servlet:
+    multipart:
+      max-file-size: 20MB
+      max-request-size: 20MB
   main:
     allow-bean-definition-overriding: true
 
@@ -27,7 +27,7 @@ spring:
 file:
   upload-dir: E:/uploads/recipe-images/
   access-path: /recipe-images/
-  max-image-size: 2MB                      # 图片大小限制
+  max-image-size: 10MB                      # 图片大小限制
   allowed-image-types: image/jpeg,image/png # 允许的图片类型
 
 #debug报告
