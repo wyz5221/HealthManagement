@@ -3,23 +3,23 @@
     <el-card class="box-card" shadow="hover">
       <div slot="header" class="clearfix header">
         <div class="title-container">
-          <i class="el-icon-data-analysis" />
+          <i class="el-icon-data-analysis"></i>
           <span class="title">抑郁自评量表（SDS）测试</span>
         </div>
-        <el-button type="text" icon="el-icon-refresh-right" @click="resetTest">重置</el-button>
+        <el-button type="text" @click="resetTest" icon="el-icon-refresh-right">重置</el-button>
       </div>
 
-      <div v-if="currentStep === 0" class="test-intro">
+      <div class="test-intro" v-if="currentStep === 0">
         <div class="intro-card">
           <div class="intro-header">
-            <i class="el-icon-info-circle" />
+            <i class="el-icon-info-circle"></i>
             <span>测试说明</span>
           </div>
           <div class="intro-content">
             <p>以下是抑郁自评量表（SDS，Self-Rating Depression Scale）的国际标准题目，共20题，采用4级评分法。</p>
             <p>请根据最近一周内的实际感受进行选择。测试结果仅供参考，不作为医疗诊断依据。</p>
             <div class="intro-note">
-              <i class="el-icon-warning-outline" />
+              <i class="el-icon-warning-outline"></i>
               <span>如有持续的情绪困扰，请咨询专业的心理医生或精神科医生。</span>
             </div>
           </div>
@@ -27,7 +27,7 @@
 
         <div class="criteria-card">
           <div class="criteria-header">
-            <i class="el-icon-medal" />
+            <i class="el-icon-medal"></i>
             <span>评分标准</span>
           </div>
           <div class="criteria-content">
@@ -53,7 +53,7 @@
         </div>
 
         <div class="action-container">
-          <el-button type="primary" size="large" icon="el-icon-caret-right" @click="startTest">开始测试</el-button>
+          <el-button type="primary" size="large" @click="startTest" icon="el-icon-caret-right">开始测试</el-button>
         </div>
       </div>
 
@@ -64,8 +64,8 @@
               :percentage="progressPercentage"
               :color="progressColor"
               :stroke-width="15"
-              :format="progressFormat"
-            />
+              :format="progressFormat">
+            </el-progress>
           </div>
           <div class="progress-info">
             <span class="current-question">第 {{ currentStep }} 题</span>
@@ -78,9 +78,8 @@
           :autoplay="false"
           indicator-position="none"
           :initial-index="currentStep-1"
-          :loop="false"
           @change="handleCarouselChange"
-        >
+          :loop="false">
           <el-carousel-item v-for="(question, index) in questions" :key="index">
             <div class="question-card" :class="{'answered': testForm.answers[index] !== null}">
               <div class="question-header">
@@ -106,14 +105,14 @@
                     <template v-else-if="score === 3">相当多时间（3-4天）</template>
                     <template v-else>绝大部分或全部时间（5-7天）</template>
                   </div>
-                  <div v-if="testForm.answers[index] === score" class="check-icon">
-                    <i class="el-icon-check" />
+                  <div class="check-icon" v-if="testForm.answers[index] === score">
+                    <i class="el-icon-check"></i>
                   </div>
                 </div>
               </div>
-
+              
               <div class="question-footer">
-                <div v-if="question.isReverse" class="question-type">
+                <div class="question-type" v-if="question.isReverse">
                   <el-tag type="info" size="small">反向计分题</el-tag>
                 </div>
               </div>
@@ -124,9 +123,8 @@
         <div class="navigation-buttons">
           <el-button
             icon="el-icon-arrow-left"
-            :disabled="currentStep <= 1"
             @click="prevQuestion"
-          >
+            :disabled="currentStep <= 1">
             上一题
           </el-button>
 
@@ -137,21 +135,19 @@
           <el-button
             v-if="currentStep < questions.length"
             type="primary"
+            @click="nextQuestion"
             :disabled="testForm.answers[currentStep-1] === null"
             icon="el-icon-arrow-right"
-            icon-position="right"
-            @click="nextQuestion"
-          >
+            iconPosition="right">
             下一题
           </el-button>
 
           <el-button
             v-else
             type="success"
-            :loading="loading"
-            icon="el-icon-check"
             @click="submitTest"
-          >
+            :loading="loading"
+            icon="el-icon-check">
             提交测试
           </el-button>
         </div>
@@ -159,13 +155,13 @@
 
       <div v-else-if="currentStep === questions.length + 1" class="test-summary">
         <div class="summary-header">
-          <i class="el-icon-circle-check" />
+          <i class="el-icon-circle-check"></i>
           <span>测试完成</span>
         </div>
 
         <div class="summary-content">
           <div class="completion-icon">
-            <i class="el-icon-finished" />
+            <i class="el-icon-finished"></i>
           </div>
           <div class="completion-text">
             <h3>您已回答完所有问题</h3>
@@ -184,19 +180,19 @@
           </div>
 
           <div class="review-hint">
-            <i class="el-icon-info-circle" />
+            <i class="el-icon-info-circle"></i>
             <span>您可以使用上一题按钮回顾并修改您的回答</span>
           </div>
-
+          
           <div class="privacy-note">
-            <i class="el-icon-lock" />
+            <i class="el-icon-lock"></i>
             <span>您的测试结果将严格保密，仅用于为您提供健康建议</span>
           </div>
         </div>
 
         <div class="action-container">
           <el-button icon="el-icon-arrow-left" @click="prevQuestion">回顾上一题</el-button>
-          <el-button type="success" :loading="loading" icon="el-icon-check" @click="submitTest">提交测试</el-button>
+          <el-button type="success" @click="submitTest" :loading="loading" icon="el-icon-check">提交测试</el-button>
         </div>
       </div>
     </el-card>
@@ -205,7 +201,7 @@
 
 <script>
 import FunctionApi from '@/api/Function_Menu'
-import userApi from '@/api/userManage'
+import userApi from "@/api/userManage"
 import { getInfo } from '@/api/user'
 import { getToken } from '@/utils/auth'
 
@@ -217,7 +213,7 @@ export default {
       userId: null,
       currentStep: 0, // 0: intro, 1-20: questions, 21: summary
       testForm: {
-        answers: new Array(20).fill(null)
+        answers: new Array(20).fill(null),
       },
       questions: [
         { text: '我感到情绪沮丧，闷闷不乐', isReverse: false },
@@ -909,7 +905,7 @@ export default {
   .test-intro, .test-content, .test-summary {
     padding: 20px 15px;
   }
-
+  
   .criteria-grid {
     grid-template-columns: 1fr;
   }
@@ -953,7 +949,7 @@ export default {
     gap: 20px;
     flex-direction: column;
   }
-
+  
   .stat-item {
     width: 100%;
   }
